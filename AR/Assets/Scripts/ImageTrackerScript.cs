@@ -17,17 +17,20 @@ public class ImageTrackerScript : MonoBehaviour
     {
         foreach (var newImg in eventArgs.added)
         {
-            
+            Console.WriteLine($"Added new image: {newImg.name}");
+            //TODO: PoC, to be replaced with actual code - Aldís 24.09.23 
         }
 
         foreach (var updateImg in eventArgs.updated)
         {
-            
+            Console.WriteLine($"Updated image: {updateImg.name}");
+            //TODO: PoC, to be replaced with actual code - Aldís 24.09.23 
         }
 
         foreach (var removedImg in eventArgs.removed)
         {
-            
+            Console.WriteLine($"Removed image: {removedImg.name}");
+            //TODO: PoC, to be replaced with actual code - Aldís 24.09.23 
         }
     }
 
