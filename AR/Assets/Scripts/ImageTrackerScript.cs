@@ -41,22 +41,22 @@ public class ImageTrackerScript : MonoBehaviour
     {
         foreach (var newImg in eventArgs.added)
         {
-            Console.WriteLine($"{newImg.name} card has been detected");
+            Console.WriteLine($"{newImg.referenceImage.name} card has been detected");
             //TODO: Display prompt to confirm using this card & selecting pawn(s) to move - Aldís 24.09.23
             GameObject pawn1 = new GameObject();
             GameObject pawn2 = new GameObject();
-            ExecuteLogic(pawn1, pawn2, stringToCardTypeDictionary[newImg.name]);
+            ExecuteLogic(pawn1, pawn2, stringToCardTypeDictionary[newImg.referenceImage.name]);
         }
 
         foreach (var updateImg in eventArgs.updated)
         {
-            Console.WriteLine($"{updateImg.name} has changed");
+            Console.WriteLine($"{updateImg.referenceImage.name} has changed");
             //TODO: PoC, to be replaced with actual code - Aldís 24.09.23 
         }
 
         foreach (var removedImg in eventArgs.removed)
         {
-            Console.WriteLine($"{removedImg.name} is no longer visible");
+            Console.WriteLine($"{removedImg.referenceImage.name} is no longer visible");
             //TODO: PoC, to be replaced with actual code - Aldís 24.09.23 
         }
     }
