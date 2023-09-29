@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 //https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@4.0/manual/tracked-image-manager.html
@@ -45,7 +43,7 @@ public class ImageTrackerScript : MonoBehaviour
             //TODO: Display prompt to confirm using this card & selecting pawn(s) to move - Aldís 24.09.23
             GameObject pawn1 = new GameObject();
             GameObject pawn2 = new GameObject();
-            ExecuteLogic(pawn1, pawn2, stringToCardTypeDictionary[newImg.referenceImage.name]);
+            ExecuteLogic(stringToCardTypeDictionary[newImg.referenceImage.name]);
         }
 
         foreach (var updateImg in eventArgs.updated)
@@ -61,9 +59,9 @@ public class ImageTrackerScript : MonoBehaviour
         }
     }
 
-    private void ExecuteLogic(GameObject pawn1, [CanBeNull] GameObject pawn2, CardTypeEnum cardType)
+    private void ExecuteLogic(CardTypeEnum cardType)
     {
-        cardLogicScript.HandleCardPlayed(cardType, pawn1, pawn2);
+        cardLogicScript.HandleCardPlayed(cardType);
     }
 
     // Start is called before the first frame update

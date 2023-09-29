@@ -10,7 +10,7 @@ public class CardLogicScript : MonoBehaviour
     [SerializeField] private GameObject currentPawn;
     [SerializeField] private GameObject otherPawn;
 
-    public void HandleCardPlayed(CardTypeEnum cardType, GameObject pawn1, [CanBeNull] GameObject pawn2)
+    public void HandleCardPlayed(CardTypeEnum cardType)
     {
         //TODO: Set pawns as appropriate - Aldís 24.09.23
         switch (cardType)
@@ -88,38 +88,31 @@ public class CardLogicScript : MonoBehaviour
 
     private void OnSwitchPlayed()
     {
-        pawnActions.SwitchPositions(currentPawn, otherPawn);
     }
 
     private void OnMoveForwardPlayed(int nrOfSteps)
     {
-        pawnActions.MoveForward(currentPawn, nrOfSteps);
     }
 
     private void OnMoveBackwardsPlayed(int nrOfSteps)
     {
-        pawnActions.MoveBackward(currentPawn, nrOfSteps);
     }
 
     private void SpawnPawn()
     {
-        pawnActions.GetPawnFromHome(currentPawn);
     }
 
     private void KillPawn()
     {
-        pawnActions.MoveHome(otherPawn);
     }
     
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
     }
 }
