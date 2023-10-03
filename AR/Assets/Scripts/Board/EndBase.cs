@@ -1,5 +1,6 @@
-namespace DefaultNamespace;
-
+namespace Board
+{
+    
 public class EndBase
 {
     private Team team;
@@ -9,7 +10,7 @@ public class EndBase
      * 1-4 -> colored ones (4 beeing the last that you can reach)
      * A pawn entering will go 0-1-2-3-4
      */
-    private Pawn[5] tiles;
+    private Pawn[] tiles = new Pawn[5];
 
     public EndBase(Team team)
     {
@@ -52,8 +53,8 @@ public class EndBase
             case 3:
             case 4:
             case 5:
-                int position = (noOfMoves - firstPositionOccupied - 1) % (firstPositionOccupied - 2); // double check math (I think it's fine but I wrote it so...)
-                tiles[position] = pawn;
+                int pos= (noOfMoves - firstPositionOccupied - 1) % (firstPositionOccupied - 2); // double check math (I think it's fine but I wrote it so...)
+                tiles[pos] = pawn;
                 break;
         }
     }
@@ -102,4 +103,5 @@ public class EndBase
 
         return -1; // pawn is not in the end base
     }
+}
 }
