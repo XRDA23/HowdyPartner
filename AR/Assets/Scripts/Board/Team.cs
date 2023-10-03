@@ -9,6 +9,6 @@ namespace Board
         BlueOrWater = 0,
         RedOrHeart = 1,
         GreenOrEmerald = 2,
-        YellowOrStart = 3
+        YellowOrStar = 3
     }
 }
