@@ -1,11 +1,11 @@
-﻿using UnityEngine;
+﻿using Board;
+using UnityEngine;
 
 public class PawnLia : MonoBehaviour 
 {
-    public TeamLia Owner { get; private set; }
-    public PawnSymbolEnum Symbol => Owner.Symbol;  // Derived from the owner's symbol.
-
-    public PawnLia(TeamLia owner)
+    public Team Owner { get; private set; }
+    
+    public PawnLia(Team owner)
     {
         Owner = owner;
     }

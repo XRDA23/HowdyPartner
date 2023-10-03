@@ -1,4 +1,6 @@
-﻿public interface IGameLogicManager
+﻿using Board;
+
+public interface IGameLogicManager
 {
     // Starts the game and determines the first player to play.
     void StartGame();
@@ -7,34 +9,34 @@
     void EndGame();
 
     // Process a single-action card move. 
-    bool PlayCard(TeamLia team, PawnLia chosenPawn, CardTypeEnum cardType);
+    bool PlayCard(Team team, PawnLia chosenPawn, CardTypeEnum cardType);
 
     // Process a card move when the card has multiple possible actions.
-    bool PlayCardWithOptions(TeamLia team, PawnLia chosenPawn, CardTypeEnum cardType, Option choice);
+    bool PlayCardWithOptions(Team team, PawnLia chosenPawn, CardTypeEnum cardType, Option choice);
 
     // Checks if the current turn is over.
     bool IsCurrentTurnOver();
 
     // Allows a player to fold their hand.
-    void FoldCards(TeamLia team);
+    void FoldCards(Team team);
 
     // Checks if a player has folded in the current round.
-    bool HasPlayerFolded(TeamLia team);
+    bool HasPlayerFolded(Team team);
 
     // Determines if a player has all their pawns safely in the end zone.
-    bool HasPlayerCompleted(TeamLia team);
+    bool HasPlayerCompleted(Team team);
 
     // Returns the number of pawns a player has in their end zone.
-    int GetPawnsInEndZone(TeamLia team);
+    int GetPawnsInEndZone(Team team);
 
     // Determines if the entire team has completed their objectives.
     bool IsTeamPartnersCompleted(Partners partnersTeam);
 
     // Determines the winning team.
-    TeamLia GetWinnerPartnersTeam();
+    Team GetWinnerPartnersTeam();
 
     // Helps a partner using a card.
-    bool AssistPartner(TeamLia team, PawnLia chosenPawn, CardTypeEnum cardType);
+    bool AssistPartner(Team team, PawnLia chosenPawn, CardTypeEnum cardType);
 
     // Advances to the next turn or change players.
     void NextTurn();
