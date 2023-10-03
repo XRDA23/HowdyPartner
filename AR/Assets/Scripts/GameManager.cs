@@ -1,3 +1,4 @@
+using Board;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -39,148 +40,73 @@ public class GameManager : MonoBehaviour
         }
     }
     
-   void SpawnPawns()
-   {
-       GameObject[] redTiles = GameObject.FindGameObjectsWithTag("BaseRedTile");
-       GameObject[] blueTiles = GameObject.FindGameObjectsWithTag("BaseBlueTile");
-       GameObject[] yellowTiles = GameObject.FindGameObjectsWithTag("BaseYellowTile");
-       GameObject[] greenTiles = GameObject.FindGameObjectsWithTag("BaseGreenTile");
-
-       SpawnPawnsForColor(redTiles, PawnLogic.PawnColor.Red, 4);
-       SpawnPawnsForColor(blueTiles, PawnLogic.PawnColor.Blue, 4);
-       SpawnPawnsForColor(yellowTiles, PawnLogic.PawnColor.Yellow, 4);
-       SpawnPawnsForColor(greenTiles, PawnLogic.PawnColor.Green, 4);
-   }
-
-   void SpawnPawnsForColor(GameObject[] baseTiles, PawnLogic.PawnColor color, int count)
-   {
-       int pawnCount = Mathf.Min(baseTiles.Length, count);
-
-       for (int i = 0; i < pawnCount; i++)
-       {
-           GameObject pawnPrefab = GetPawnPrefab(color);
-
-           pawns[currentPawnIndex] = Instantiate(pawnPrefab, baseTiles[i].transform.position, Quaternion.identity);
-           PawnLogic pawnLogicLogic = pawns[currentPawnIndex].GetComponent<PawnLogic>();
-           pawnLogicLogic.gameManager = this;
-           pawnLogicLogic.pawnColor = color;
-
-           currentPawnIndex++;
-       }
-   }
-   
-    GameObject GetPawnPrefab(PawnLogic.PawnColor color)
-    {
-        switch (color)
-        {
-            case PawnLogic.PawnColor.Red:
-                return redPawnPrefab;
-            case PawnLogic.PawnColor.Blue:
-                return bluePawnPrefab;
-            case PawnLogic.PawnColor.Yellow:
-                return yellowPawnPrefab;
-            case PawnLogic.PawnColor.Green:
-                return greenPawnPrefab;
-            default:
-                return null;
-        }
-    }
-
-    void MoveCurrentPawn(Vector3 targetPosition)
-    {
-        if (pawns[currentPawnIndex] != null)
-        {
-            pawns[currentPawnIndex].transform.position = targetPosition;
-        }
-    }
-
-
-
-    public void SelectPawn(GameObject pawn)
-    {
-        for (int i = 0; i < pawns.Length; i++)
-        {
-            if (pawns[i] == pawn)
-            {
-                currentPawnIndex = i;
-                return;
-            }
-        }
-    }
-
-    
-}
-
-
-
-/*
-using UnityEngine;
-
-public class GameManager : MonoBehaviour
+ void SpawnPawns()
 {
-    public GameObject pawnPrefab; 
-    public LayerMask tileLayer; 
+   GameObject[] redTiles = GameObject.FindGameObjectsWithTag("BaseRedTile");
+   GameObject[] blueTiles = GameObject.FindGameObjectsWithTag("BaseBlueTile");
+   GameObject[] yellowTiles = GameObject.FindGameObjectsWithTag("BaseYellowTile");
+   GameObject[] greenTiles = GameObject.FindGameObjectsWithTag("BaseGreenTile");
 
-    private GameObject[] pawns = new GameObject[2]; 
-    private int currentPawnIndex = 0;
+   SpawnPawnsForColor(redTiles, Team.RedOrHeart, 4);
+   SpawnPawnsForColor(blueTiles, Team.BlueOrWater, 4);
+   SpawnPawnsForColor(yellowTiles, Team.YellowOrStar, 4);
+   SpawnPawnsForColor(greenTiles, Team.GreenOrEmerald, 4);
+}
 
-    void Start()
+void SpawnPawnsForColor(GameObject[] baseTiles, Team color, int count)
+{
+   int pawnCount = Mathf.Min(baseTiles.Length, count);
+
+   for (int i = 0; i < pawnCount; i++)
+   {
+       GameObject pawnPrefab = GetPawnPrefab(color);
+
+       pawns[currentPawnIndex] = Instantiate(pawnPrefab, baseTiles[i].transform.position, Quaternion.identity);
+       PawnLogic pawnLogic = pawns[currentPawnIndex].GetComponent<PawnLogic>();
+       pawnLogic.gameManager = this;
+       pawnLogic.team = color;
+
+       currentPawnIndex++;
+   }
+}
+GameObject GetPawnPrefab(Team color)
+{
+    switch (color)
     {
-        SpawnPawns();
+        case Team.RedOrHeart:
+            return redPawnPrefab;
+        case Team.BlueOrWater:
+            return bluePawnPrefab;
+        case Team.YellowOrStar:
+            return yellowPawnPrefab;
+        case Team.GreenOrEmerald:
+            return greenPawnPrefab;
+        default:
+            return null;
     }
+}
 
-    void Update()
+void MoveCurrentPawn(Vector3 targetPosition)
+{
+    if (pawns[currentPawnIndex] != null)
     {
-        // Check if there is at least one touch
-        if (Input.touchCount > 0)
-        {
-            Touch touch = Input.GetTouch(0);
-
-            // Check if the touch phase is began (finger touched the screen)
-            if (touch.phase == TouchPhase.Began)
-            {
-                RaycastHit hit;
-                Ray ray = Camera.main.ScreenPointToRay(touch.position);
-
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity, tileLayer))
-                {
-                    MoveCurrentPawn(hit.point);
-                }
-            }
-        }
+        pawns[currentPawnIndex].transform.position = targetPosition;
     }
+}
 
-    void SpawnPawns()
+
+
+public void SelectPawn(GameObject pawn)
+{
+    for (int i = 0; i < pawns.Length; i++)
     {
-        GameObject[] baseTiles = GameObject.FindGameObjectsWithTag("BaseTile");
-
-        for (int i = 0; i < 16 && i < baseTiles.Length; i++)
+        if (pawns[i] == pawn)
         {
-            pawns[i] = Instantiate(pawnPrefab, baseTiles[i].transform.position, Quaternion.identity);
-            pawns[i].GetComponent<Pawn>().gameManager = this;
-        }
-    }
-
-    void MoveCurrentPawn(Vector3 targetPosition)
-    {
-        if (pawns[currentPawnIndex] != null)
-        {
-            pawns[currentPawnIndex].transform.position = targetPosition;
-        }
-    }
-
-    public void SelectPawn(GameObject pawn)
-    {
-        for (int i = 0; i < pawns.Length; i++)
-        {
-            if (pawns[i] == pawn)
-            {
-                currentPawnIndex = i;
-                return;
-            }
+            currentPawnIndex = i;
+            return;
         }
     }
 }
 
-*/
 
+}

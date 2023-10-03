@@ -1,16 +1,9 @@
+using Board;
 using UnityEngine;
 
 public class PawnLogic : MonoBehaviour
 {
-    public enum PawnColor
-    {
-        Red,
-        Blue,
-        Yellow,
-        Green
-    }
-
-    public PawnColor pawnColor;
+    public Team team;
     public GameManager gameManager;
 
     void OnMouseDown()
