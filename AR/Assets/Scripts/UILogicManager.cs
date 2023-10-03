@@ -1,10 +1,13 @@
-﻿﻿using System.Collections.Generic;
-using TMPro;
+﻿using System;
+ using System.Collections.Generic;
+ using Board;
+ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;  
+using UnityEngine.UI;
+ using Random = UnityEngine.Random;
 
-public class UILogicManager: MonoBehaviour
+ public class UILogicManager: MonoBehaviour
 {
     /*
     [SerializeField]  private TextMeshProUGUI turnText;
@@ -25,15 +28,17 @@ public class UILogicManager: MonoBehaviour
     [SerializeField] private TextMeshProUGUI scanCardText; // Reference to the text element for scan instructions.
     [SerializeField] private Button scanCardButton; // Reference to the scan button.
 
-    private List<TeamLia> teams = new List<TeamLia>();
+    private List<Team> teams = new List<Team>();
 
     private void Start()
     {
+        teams = EnumToList<Team>();
         // Initialize the teams
-        teams.Add(new TeamLia(PawnSymbolEnum.Emerald));
+     /*   teams.Add(new TeamLia(PawnSymbolEnum.Emerald));
         teams.Add(new TeamLia(PawnSymbolEnum.Heart));
         teams.Add(new TeamLia(PawnSymbolEnum.Star));
         teams.Add(new TeamLia(PawnSymbolEnum.WaterDrop));
+        */
         // Ensure only the start button and title text are shown
         gameTitleText.gameObject.SetActive(true);
         startButton.gameObject.SetActive(true);
@@ -74,7 +79,7 @@ public class UILogicManager: MonoBehaviour
        gameTitleText.gameObject.SetActive(false); // Hide the title text
 
        // Randomly decide whose turn it is and display the turn indicator
-       TeamLia startingTeam = teams[Random.Range(0, teams.Count)];
+       Team startingTeam = teams[Random.Range(0, teams.Count)];
        turnIndicatorText.gameObject.SetActive(true); // Show the turn text
        UpdateTurnIndicator(startingTeam);
        
@@ -94,9 +99,15 @@ public class UILogicManager: MonoBehaviour
        
    }
     
-    private void UpdateTurnIndicator(TeamLia team)
+    private void UpdateTurnIndicator(Team team)
     {
-        turnIndicatorText.text = $"{team.Symbol}'s turn!";
+        turnIndicatorText.text = $"{team} team's turn!";
+    }
+    
+    // Method to convert enum values to a list.
+    private List<T> EnumToList<T>()
+    {
+        return new List<T>((T[])Enum.GetValues(typeof(T)));
     }
     
 }
