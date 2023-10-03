@@ -5,11 +5,19 @@ TagManager:
   serializedVersion: 2
   tags:
   - UICardText
+  - BaseTile
+  - Tile
+  - FinalZoneTile
+  - HeartTile
+  - BaseRedTile
+  - BaseBlueTile
+  - BaseGreenTile
+  - BaseYellowTile
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - TileLayer
   - Water
   - UI
   - 
