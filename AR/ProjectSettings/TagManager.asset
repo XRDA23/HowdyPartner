@@ -8,6 +8,10 @@ TagManager:
   - Tile
   - FinalZoneTile
   - HeartTile
+  - BaseRedTile
+  - BaseBlueTile
+  - BaseGreenTile
+  - BaseYellowTile
   layers:
   - Default
   - TransparentFX
