@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class Pawn : MonoBehaviour
+public class PawnLogic : MonoBehaviour
 {
-    public enum Team
+    public enum PawnColor
     {
         Red,
         Blue,
@@ -10,7 +10,7 @@ public class Pawn : MonoBehaviour
         Green
     }
 
-    public Team team;
+    public PawnColor pawnColor;
     public GameManager gameManager;
 
     void OnMouseDown()

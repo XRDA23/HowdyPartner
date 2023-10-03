@@ -46,13 +46,13 @@ public class GameManager : MonoBehaviour
        GameObject[] yellowTiles = GameObject.FindGameObjectsWithTag("BaseYellowTile");
        GameObject[] greenTiles = GameObject.FindGameObjectsWithTag("BaseGreenTile");
 
-       SpawnPawnsForColor(redTiles, Pawn.Team.Red, 4);
-       SpawnPawnsForColor(blueTiles, Pawn.Team.Blue, 4);
-       SpawnPawnsForColor(yellowTiles, Pawn.Team.Yellow, 4);
-       SpawnPawnsForColor(greenTiles, Pawn.Team.Green, 4);
+       SpawnPawnsForColor(redTiles, PawnLogic.PawnColor.Red, 4);
+       SpawnPawnsForColor(blueTiles, PawnLogic.PawnColor.Blue, 4);
+       SpawnPawnsForColor(yellowTiles, PawnLogic.PawnColor.Yellow, 4);
+       SpawnPawnsForColor(greenTiles, PawnLogic.PawnColor.Green, 4);
    }
 
-   void SpawnPawnsForColor(GameObject[] baseTiles, Pawn.Team color, int count)
+   void SpawnPawnsForColor(GameObject[] baseTiles, PawnLogic.PawnColor color, int count)
    {
        int pawnCount = Mathf.Min(baseTiles.Length, count);
 
@@ -61,25 +61,25 @@ public class GameManager : MonoBehaviour
            GameObject pawnPrefab = GetPawnPrefab(color);
 
            pawns[currentPawnIndex] = Instantiate(pawnPrefab, baseTiles[i].transform.position, Quaternion.identity);
-           Pawn pawnLogic = pawns[currentPawnIndex].GetComponent<Pawn>();
-           pawnLogic.gameManager = this;
-           pawnLogic.team = color;
+           PawnLogic pawnLogicLogic = pawns[currentPawnIndex].GetComponent<PawnLogic>();
+           pawnLogicLogic.gameManager = this;
+           pawnLogicLogic.pawnColor = color;
 
            currentPawnIndex++;
        }
    }
    
-    GameObject GetPawnPrefab(Pawn.Team color)
+    GameObject GetPawnPrefab(PawnLogic.PawnColor color)
     {
         switch (color)
         {
-            case Pawn.Team.Red:
+            case PawnLogic.PawnColor.Red:
                 return redPawnPrefab;
-            case Pawn.Team.Blue:
+            case PawnLogic.PawnColor.Blue:
                 return bluePawnPrefab;
-            case Pawn.Team.Yellow:
+            case PawnLogic.PawnColor.Yellow:
                 return yellowPawnPrefab;
-            case Pawn.Team.Green:
+            case PawnLogic.PawnColor.Green:
                 return greenPawnPrefab;
             default:
                 return null;
