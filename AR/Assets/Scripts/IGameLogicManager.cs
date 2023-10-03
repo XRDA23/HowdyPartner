@@ -9,10 +9,10 @@ public interface IGameLogicManager
     void EndGame();
 
     // Process a single-action card move. 
-    bool PlayCard(Team team, PawnLia chosenPawn, CardTypeEnum cardType);
+    bool PlayCard(Team team, PawnLogic chosenPawn, CardTypeEnum cardType);
 
     // Process a card move when the card has multiple possible actions.
-    bool PlayCardWithOptions(Team team, PawnLia chosenPawn, CardTypeEnum cardType, Option choice);
+    bool PlayCardWithOptions(Team team, PawnLogic chosenPawn, CardTypeEnum cardType, Option choice);
 
     // Checks if the current turn is over.
     bool IsCurrentTurnOver();
@@ -36,7 +36,7 @@ public interface IGameLogicManager
     Team GetWinnerPartnersTeam();
 
     // Helps a partner using a card.
-    bool AssistPartner(Team team, PawnLia chosenPawn, CardTypeEnum cardType);
+    bool AssistPartner(Team team, PawnLogic chosenPawn, CardTypeEnum cardType);
 
     // Advances to the next turn or change players.
     void NextTurn();
