@@ -1,32 +1,23 @@
 ﻿using System;
- using System.Collections.Generic;
- using Board;
- using TMPro;
-using Unity.VisualScripting;
+using System.Collections.Generic;
+using Board;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
- using Random = UnityEngine.Random;
+using Random = UnityEngine.Random;
 
- public class UILogicManager: MonoBehaviour
+public class UILogicManager : MonoBehaviour
 {
-    /*
-    [SerializeField]  private TextMeshProUGUI turnText;
-     private TextMeshProUGUI outcomeText;
-     private TextMeshProUGUI winningTeamText;
-    private GameObject cardOptionPanel; // A panel that pops up when card options are needed.
-    private Camera mainCamera;
-    public Team testTeam;  // This is for testing purposes.
-    [SerializeField]  private PawnSymbol _pawnSymbol;
-    */
-   
-
-
-    public TextMeshProUGUI turnIndicatorText; 
-    public Button startButton; 
-    public GameObject startPanel;  
+    public TextMeshProUGUI turnIndicatorText;
+    public Button startButton;
+    public GameObject startPanel;
     [SerializeField] private TextMeshProUGUI gameTitleText;
-    [SerializeField] private TextMeshProUGUI scanCardText; // Reference to the text element for scan instructions.
-    [SerializeField] private Button scanCardButton; // Reference to the scan button.
+    [SerializeField] private TextMeshProUGUI boardWithPawnsText;
+
+    [SerializeField] private TextMeshProUGUI gameRuleInfoText;
+    [SerializeField] private Button showTurnButton;
+    [SerializeField] private Button scanCardButton;
+
 
     private List<Team> teams = new List<Team>();
 
@@ -34,17 +25,12 @@ using UnityEngine.UI;
     {
         teams = EnumToList<Team>();
         // Initialize the teams
-     /*   teams.Add(new TeamLia(PawnSymbolEnum.Emerald));
-        teams.Add(new TeamLia(PawnSymbolEnum.Heart));
-        teams.Add(new TeamLia(PawnSymbolEnum.Star));
-        teams.Add(new TeamLia(PawnSymbolEnum.WaterDrop));
-        */
+
         // Ensure only the start button and title text are shown
         gameTitleText.gameObject.SetActive(true);
         startButton.gameObject.SetActive(true);
-        turnIndicatorText.gameObject.SetActive(false); // hide the turn indicator
 
-        if(startButton != null)
+        if (startButton != null)
         {
             startButton.onClick.AddListener(OnStartButtonClicked);
         }
@@ -52,8 +38,8 @@ using UnityEngine.UI;
         {
             Debug.LogError("Start Button is not assigned in the inspector!");
         }
-        
-        if(scanCardButton != null)
+
+        if (scanCardButton != null)
         {
             scanCardButton.onClick.AddListener(OnScanButtonClicked);
         }
@@ -62,7 +48,7 @@ using UnityEngine.UI;
             Debug.LogError("Scan card Button is not assigned in the inspector!");
         }
     }
-    
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
@@ -70,44 +56,66 @@ using UnityEngine.UI;
             Debug.Log("Space was pressed!");
         }
     }
-    
-   private void OnStartButtonClicked()
-   {
-       Debug.Log("Start game button was clicked!");
 
-       startButton.gameObject.SetActive(false);
-       gameTitleText.gameObject.SetActive(false); // Hide the title text
+    private void OnStartButtonClicked()
+    {
+        Debug.Log("Start game button was clicked!");
 
-       // Randomly decide whose turn it is and display the turn indicator
-       Team startingTeam = teams[Random.Range(0, teams.Count)];
-       turnIndicatorText.gameObject.SetActive(true); // Show the turn text
-       UpdateTurnIndicator(startingTeam);
-       
-       // Show scan instructions and the scan button
-       scanCardText.gameObject.SetActive(true);
-       scanCardButton.gameObject.SetActive(true);
-   }
+        // Hide the title and the start button
+        startButton.gameObject.SetActive(false);
+        gameTitleText.gameObject.SetActive(false);
 
-   public void OnScanButtonClicked()
-   {
+        // Show info message
+        boardWithPawnsText.gameObject.SetActive(true);
+        gameRuleInfoText.text = "The person sitting across you is your partner";
+        gameRuleInfoText.gameObject.SetActive(true);
 
-       // For now, hide the elements.
-       Debug.Log("Scan card Button was clicked!");
-       scanCardText.gameObject.SetActive(false);
-       scanCardButton.gameObject.SetActive(false);
-       turnIndicatorText.gameObject.SetActive(false);
-       
-   }
-    
+        // Display 'Show turn' button
+        showTurnButton.gameObject.SetActive(true);
+
+        if (showTurnButton != null)
+        {
+            showTurnButton.onClick.AddListener(OnShowTurnButtonClicked);
+        }
+        else
+        {
+            Debug.LogError("Show Turn Button is not assigned in the inspector!");
+        }
+    }
+
+    private void OnShowTurnButtonClicked()
+    {
+        // Randomly decide whose turn it is and display the turn indicator
+        Team startingTeam = teams[Random.Range(0, teams.Count)];
+        UpdateTurnIndicator(startingTeam);
+
+        turnIndicatorText.gameObject.SetActive(true); // Show the turn text
+        scanCardButton.gameObject.SetActive(true);
+
+        // Hide the "Show turn" button and game rule info after revealing the turn
+        showTurnButton.gameObject.SetActive(false);
+        gameRuleInfoText.gameObject.SetActive(false);
+        boardWithPawnsText.gameObject.SetActive(false);
+    }
+
+
+    public void OnScanButtonClicked()
+    {
+        // For now, hide the elements.
+        Debug.Log("Scan card Button was clicked!");
+        scanCardButton.gameObject.SetActive(false);
+        turnIndicatorText.gameObject.SetActive(false);
+    }
+
+
     private void UpdateTurnIndicator(Team team)
     {
         turnIndicatorText.text = $"{team} team's turn!";
     }
-    
+
     // Method to convert enum values to a list.
     private List<T> EnumToList<T>()
     {
         return new List<T>((T[])Enum.GetValues(typeof(T)));
     }
-    
 }
