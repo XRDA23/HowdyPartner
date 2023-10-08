@@ -16,7 +16,8 @@ public class UILogicManager : MonoBehaviour
     [SerializeField] private Button showTurnButton;
     [SerializeField] private Button scanCardButton;
     [SerializeField] private GameManager gameManager;
-    public ImageTrackerScript imageTrackerScript;
+    [SerializeField] private ImageTrackerScript imageTracker;
+
 
     private List<Team> teams = new List<Team>();
 
@@ -46,7 +47,15 @@ public class UILogicManager : MonoBehaviour
         {
             Debug.LogError("Scan card Button is not assigned in the inspector!");
         }
+        
+        imageTracker.OnCardScanned += HandleCardScanned;
     }
+    
+    private void OnDestroy()
+    {
+        imageTracker.OnCardScanned -= HandleCardScanned;
+    }
+
 
     void Update()
     {
@@ -103,16 +112,8 @@ public class UILogicManager : MonoBehaviour
         turnIndicatorText.gameObject.SetActive(false);
         
         // Enable the Image Tracker
-        if(imageTrackerScript != null)
-        {
-            imageTrackerScript.enabled = true;
-      
-            Debug.Log("scanning!");
-        }
-        else
-        {
-            Debug.LogError("Image Tracker Script reference is missing.");
-        }
+        imageTracker.StartScanning();
+        Debug.Log("Started scanning for a card...");
     }
 
 
@@ -120,6 +121,14 @@ public class UILogicManager : MonoBehaviour
     {
         turnIndicatorText.text = $"{team} team's turn!";
     }
+    
+    private void HandleCardScanned(CardTypeEnum cardType)
+    {
+        Debug.Log("Card scanned: " + cardType);
+        imageTracker.StopScanning();
+        // Here, we can add logic for what we want to do when a card is detected.
+    }
+
 
     // Method to convert enum values to a list.
     private List<T> EnumToList<T>()

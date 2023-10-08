@@ -35,13 +35,30 @@ public class ImageTrackerScript : MonoBehaviour
         };
     }
     
+    
+    
     private void OnEnable()
     {
         imgManager.trackedImagesChanged += OnChanged;
     }
+    
+    private bool isScanning = false;
+
+    public void StartScanning()
+    {
+        isScanning = true;
+    }
+
+    public void StopScanning()
+    {
+        isScanning = false;
+    }
+
 
     void OnChanged(ARTrackedImagesChangedEventArgs eventArgs)
     {
+        if (!isScanning) return; // Exit if not in scanning mode
+
         foreach (var newImg in eventArgs.added)
         {
             Console.WriteLine($"{newImg.referenceImage.name} card has been detected");
@@ -55,4 +72,5 @@ public class ImageTrackerScript : MonoBehaviour
             }
         }
     }
+
 }
