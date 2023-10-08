@@ -48,7 +48,7 @@ public class UILogicManager : MonoBehaviour
         {
             Debug.LogError("Scan card Button is not assigned in the inspector!");
         }
-        
+
         if (imageTracker != null)
         {
             imageTracker.OnCardScanned += HandleCardScanned;
@@ -57,9 +57,8 @@ public class UILogicManager : MonoBehaviour
         {
             Debug.LogError("Image Tracker is not assigned in the inspector!");
         }
-      
     }
-    
+
     private void OnDestroy()
     {
         imageTracker.OnCardScanned -= HandleCardScanned;
@@ -84,7 +83,7 @@ public class UILogicManager : MonoBehaviour
 
         // Call the StartGame method from the GameManager
         gameManager.StartGame();
-        
+
         // Display 'Show turn' button
         showTurnButton.gameObject.SetActive(true);
 
@@ -119,11 +118,10 @@ public class UILogicManager : MonoBehaviour
         Debug.Log("Scan card Button was clicked!");
         scanCardButton.gameObject.SetActive(false);
         turnIndicatorText.gameObject.SetActive(false);
-        
+
         // Enable the Image Tracker
         imageTracker.StartScanning();
         Debug.Log("Started scanning for a card...");
-        
     }
 
 
@@ -131,15 +129,30 @@ public class UILogicManager : MonoBehaviour
     {
         turnIndicatorText.text = $"{team} team's turn!";
     }
-    
+
     private void HandleCardScanned(CardTypeEnum cardType)
     {
+        Debug.Log("HandleCardScanned method entered.");
         Debug.Log("Card scanned: " + cardType);
-        imageTracker.StopScanning();
-        
-        // Display the detected card in the UI
-        detectedCardText.text = "Detected Card: " + cardType;
-        detectedCardText.gameObject.SetActive(true);
+
+        if (imageTracker != null)
+        {
+            imageTracker.StopScanning();
+        }
+        else
+        {
+            Debug.LogError("ImageTracker is null.");
+        }
+
+        if (detectedCardText != null)
+        {
+            detectedCardText.text = "Detected Card: " + cardType;
+            detectedCardText.gameObject.SetActive(true);
+        }
+        else
+        {
+            Debug.LogError("detectedCardText is null.");
+        }
     }
 
 
