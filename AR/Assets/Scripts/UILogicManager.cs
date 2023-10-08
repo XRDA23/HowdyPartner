@@ -17,6 +17,7 @@ public class UILogicManager : MonoBehaviour
     [SerializeField] private Button scanCardButton;
     [SerializeField] private GameManager gameManager;
     [SerializeField] private ImageTrackerScript imageTracker;
+    [SerializeField] private TextMeshProUGUI detectedCardText;
 
 
     private List<Team> teams = new List<Team>();
@@ -114,6 +115,7 @@ public class UILogicManager : MonoBehaviour
         // Enable the Image Tracker
         imageTracker.StartScanning();
         Debug.Log("Started scanning for a card...");
+        
     }
 
 
@@ -126,7 +128,10 @@ public class UILogicManager : MonoBehaviour
     {
         Debug.Log("Card scanned: " + cardType);
         imageTracker.StopScanning();
-        // Here, we can add logic for what we want to do when a card is detected.
+        
+        // Display the detected card in the UI
+        detectedCardText.text = "Detected Card: " + cardType;
+        detectedCardText.gameObject.SetActive(true);
     }
 
 
