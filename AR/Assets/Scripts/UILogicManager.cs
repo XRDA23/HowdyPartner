@@ -12,8 +12,6 @@ public class UILogicManager : MonoBehaviour
     public Button startButton;
     public GameObject startPanel;
     [SerializeField] private TextMeshProUGUI gameTitleText;
-    [SerializeField] private TextMeshProUGUI boardWithPawnsText;
-
     [SerializeField] private TextMeshProUGUI gameRuleInfoText;
     [SerializeField] private Button showTurnButton;
     [SerializeField] private Button scanCardButton;
@@ -69,11 +67,6 @@ public class UILogicManager : MonoBehaviour
         // Call the StartGame method from the GameManager
         gameManager.StartGame();
         
-        // Show info message
-        boardWithPawnsText.gameObject.SetActive(true);
-        gameRuleInfoText.text = "The person sitting across you is your partner";
-        gameRuleInfoText.gameObject.SetActive(true);
-
         // Display 'Show turn' button
         showTurnButton.gameObject.SetActive(true);
 
@@ -99,7 +92,6 @@ public class UILogicManager : MonoBehaviour
         // Hide the "Show turn" button and game rule info after revealing the turn
         showTurnButton.gameObject.SetActive(false);
         gameRuleInfoText.gameObject.SetActive(false);
-        boardWithPawnsText.gameObject.SetActive(false);
     }
 
 
