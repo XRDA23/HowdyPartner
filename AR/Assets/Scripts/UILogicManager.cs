@@ -17,6 +17,7 @@ public class UILogicManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI gameRuleInfoText;
     [SerializeField] private Button showTurnButton;
     [SerializeField] private Button scanCardButton;
+    [SerializeField] private GameManager gameManager;
 
 
     private List<Team> teams = new List<Team>();
@@ -65,6 +66,9 @@ public class UILogicManager : MonoBehaviour
         startButton.gameObject.SetActive(false);
         gameTitleText.gameObject.SetActive(false);
 
+        // Call the StartGame method from the GameManager
+        gameManager.StartGame();
+        
         // Show info message
         boardWithPawnsText.gameObject.SetActive(true);
         gameRuleInfoText.text = "The person sitting across you is your partner";
