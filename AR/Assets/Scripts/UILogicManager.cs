@@ -49,7 +49,15 @@ public class UILogicManager : MonoBehaviour
             Debug.LogError("Scan card Button is not assigned in the inspector!");
         }
         
-        imageTracker.OnCardScanned += HandleCardScanned;
+        if (imageTracker != null)
+        {
+            imageTracker.OnCardScanned += HandleCardScanned;
+        }
+        else
+        {
+            Debug.LogError("Image Tracker is not assigned in the inspector!");
+        }
+      
     }
     
     private void OnDestroy()

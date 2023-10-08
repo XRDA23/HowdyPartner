@@ -61,14 +61,16 @@ public class ImageTrackerScript : MonoBehaviour
 
         foreach (var newImg in eventArgs.added)
         {
-            Console.WriteLine($"{newImg.referenceImage.name} card has been detected");
+            Debug.Log($"{newImg.referenceImage.name} card has been detected");
+
             if (stringToCardTypeDictionary.TryGetValue(newImg.referenceImage.name, out CardTypeEnum cardType))
             {
                 OnCardScanned?.Invoke(cardType);
             }
             else
             {
-                Console.WriteLine($"{newImg.referenceImage.name} was not found in the image tracker dictionary");
+                Debug.Log($"{newImg.referenceImage.name} was not found in the image tracker dictionary");
+
             }
         }
     }
