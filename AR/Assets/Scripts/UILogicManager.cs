@@ -16,7 +16,7 @@ public class UILogicManager : MonoBehaviour
     [SerializeField] private Button showTurnButton;
     [SerializeField] private Button scanCardButton;
     [SerializeField] private GameManager gameManager;
-
+    public ImageTrackerScript imageTrackerScript;
 
     private List<Team> teams = new List<Team>();
 
@@ -101,6 +101,18 @@ public class UILogicManager : MonoBehaviour
         Debug.Log("Scan card Button was clicked!");
         scanCardButton.gameObject.SetActive(false);
         turnIndicatorText.gameObject.SetActive(false);
+        
+        // Enable the Image Tracker
+        if(imageTrackerScript != null)
+        {
+            imageTrackerScript.enabled = true;
+      
+            Debug.Log("scanning!");
+        }
+        else
+        {
+            Debug.LogError("Image Tracker Script reference is missing.");
+        }
     }
 
 
