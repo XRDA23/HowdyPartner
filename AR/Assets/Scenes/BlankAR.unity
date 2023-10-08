@@ -525,6 +525,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 362736559}
   m_CullTransparentMesh: 1
+--- !u!1 &374703341
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 374703343}
+  - component: {fileID: 374703342}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &374703342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374703341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9832dbac7e591e4a94c1cef3cd0f28f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tileLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  redPawnPrefab: {fileID: 1270749460028906, guid: ba1cf2d8c8a1153459fab02745f83681,
+    type: 3}
+  bluePawnPrefab: {fileID: 1790432356090350, guid: fa8fd3c6067eb614aa9ec14323666765,
+    type: 3}
+  yellowPawnPrefab: {fileID: 1473673019737178, guid: af29c0abe22472744be02c22b4f0dd48,
+    type: 3}
+  greenPawnPrefab: {fileID: 1092175069519616, guid: e6421ceef6074294c80d5c7c1622da5c,
+    type: 3}
+  boardPrefab: {fileID: 7015306177305918648, guid: c9824593c57eba94fb46f8132c8354c0,
+    type: 3}
+--- !u!4 &374703343
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374703341}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -6.5, z: 7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &392587045
 GameObject:
   m_ObjectHideFlags: 0
@@ -1002,7 +1059,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   imgManager: {fileID: 656880749}
-  cardLogicScript: {fileID: 656880751}
 --- !u!1 &851755713
 GameObject:
   m_ObjectHideFlags: 0
@@ -1260,6 +1316,7 @@ MonoBehaviour:
   gameRuleInfoText: {fileID: 2116770379}
   showTurnButton: {fileID: 1769511414}
   scanCardButton: {fileID: 1373067192}
+  gameManager: {fileID: 374703342}
 --- !u!1 &1246427286
 GameObject:
   m_ObjectHideFlags: 0
@@ -1358,7 +1415,7 @@ GameObject:
   - component: {fileID: 1354141931}
   m_Layer: 0
   m_Name: AR Camera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2148,3 +2205,4 @@ SceneRoots:
   - {fileID: 1659859599}
   - {fileID: 656880748}
   - {fileID: 1468695585}
+  - {fileID: 374703343}
