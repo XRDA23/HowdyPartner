@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject bluePawnPrefab;
     [SerializeField] private GameObject yellowPawnPrefab;
     [SerializeField] private GameObject greenPawnPrefab;
+    [SerializeField] private GameObject boardPrefab;
 
     private GameObject[] pawns = new GameObject[16];
     private int currentPawnIndex = 0;
@@ -18,9 +19,25 @@ public class GameManager : MonoBehaviour
     private bool isSwitching = false;
     private GameObject selectedPawn;
 
-    void Start()
+    public void StartGame()
     {
+        // Spawn the board prefab 
+        SpawnBoardPrefab();
+
+        // Spawn the pawns
         SpawnPawns();
+    }
+    void SpawnBoardPrefab()
+    {
+        // Setting the position of board
+        Vector3 boardPosition = new Vector3(0, -7f, 9f); 
+
+        // Instantiate the board prefab
+        GameObject boardInstance = Instantiate(boardPrefab, boardPosition, Quaternion.identity);
+        
+        // Adjust the rotation of the board
+           boardInstance.transform.rotation = Quaternion.Euler(0, -180, 0);
+
     }
 
     void Update()
