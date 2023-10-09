@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Board;
 using UnityEngine;
 
@@ -10,6 +11,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject yellowPawnPrefab;
     [SerializeField] private GameObject greenPawnPrefab;
     [SerializeField] private GameObject boardPrefab;
+    private List<GameObject[]> paths = new List<GameObject[]>(); // List to store paths
+  //  private int nrOfSteps = 0; // Define it as a class-level variable
+
+    private int currentPathIndex = 0; // Variable to keep track of current path
+
+    private int currentStep = 0; // Variable to keep track of current step on path
+
 
     private GameObject[] pawns = new GameObject[16];
     private int currentPawnIndex = 0;
@@ -26,6 +34,15 @@ public class GameManager : MonoBehaviour
 
         // Spawn the pawns
         SpawnPawns();
+        GameObject[] redPath = GameObject.FindGameObjectsWithTag("RedPathTile"); 
+        GameObject[] yellowPath = GameObject.FindGameObjectsWithTag("YellowPathTile"); 
+        GameObject[] greenPath = GameObject.FindGameObjectsWithTag("GreenPathTile"); 
+        GameObject[] bluePath = GameObject.FindGameObjectsWithTag("BluePathTile"); 
+
+        paths.Add(redPath);
+        paths.Add(yellowPath);
+        paths.Add(greenPath);
+        paths.Add(bluePath);
     }
     void SpawnBoardPrefab()
     {
@@ -51,7 +68,14 @@ public class GameManager : MonoBehaviour
             {
                 if (pawns[currentPawnIndex] != null)
                 {
-                    MoveCurrentPawn(hit.point);
+                    // Assuming that a pawn is selected (you need to implement this logic)
+                    // and that 'selectedPawn' is a reference to the selected pawn.
+                    GameObject selectedPawn = pawns[currentPawnIndex]; 
+
+                    // Assuming that 'nrOfSteps' is the number of steps you want to move.
+                    int nrOfSteps = 13; // Change this to the actual number of steps.
+
+                    MoveCurrentPawn(nrOfSteps);
                 }
             }
         }
@@ -103,15 +127,60 @@ GameObject GetPawnPrefab(Team color)
     }
 }
 
-void MoveCurrentPawn(Vector3 targetPosition)
+public void MoveCurrentPawn(int nrOfSteps)
 {
     if (pawns[currentPawnIndex] != null)
     {
-        pawns[currentPawnIndex].transform.position = targetPosition;
+        Team currentTeam = GetCurrentPawnTeam();
+
+        GameObject[] currentPath = GetPathForTeam(currentTeam);
+
+        if (currentStep + nrOfSteps < currentPath.Length)
+        {
+            currentStep += nrOfSteps;
+
+            Vector3 targetPosition = currentPath[currentStep].transform.position;
+            pawns[currentPawnIndex].transform.position = targetPosition;
+        }
+        else
+        {
+            // Handle case where pawn completes the path
+            SwitchToNextPath();
+        }
     }
 }
 
 
+private Team GetCurrentPawnTeam()
+{
+    PawnLogic pawnLogic = pawns[currentPawnIndex].GetComponent<PawnLogic>();
+    Debug.Log("Current Pawn Team: " + pawnLogic.team); // Debug
+    return pawnLogic.team;
+}
+
+private GameObject[] GetPathForTeam(Team team)
+{
+    switch (team)
+    {
+        case Team.RedOrHeart:
+            return paths[0]; // Assuming red paths are at index 1
+        case Team.BlueOrWater:
+            return paths[3]; // Assuming blue paths are at index 0
+        case Team.GreenOrEmerald:
+            return paths[2]; // Assuming green paths are at index 2
+        case Team.YellowOrStar:
+            return paths[1]; // Assuming yellow paths are at index 3
+        default:
+            return null; // Handle error case
+    }
+}
+
+// Call this method when you want to switch to the next path
+void SwitchToNextPath()
+{
+    currentPathIndex = (currentPathIndex + 1) % paths.Count;
+    currentStep = 0; // Reset current step
+}
 
 public void SelectPawn(GameObject pawn)
 {

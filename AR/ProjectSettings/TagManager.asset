@@ -13,6 +13,10 @@ TagManager:
   - BaseBlueTile
   - BaseGreenTile
   - BaseYellowTile
+  - RedPathTile
+  - YellowPathTile
+  - GreenPathTile
+  - BluePathTile
   layers:
   - Default
   - TransparentFX
