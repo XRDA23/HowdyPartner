@@ -35,44 +35,24 @@ public class ImageTrackerScript : MonoBehaviour
         };
     }
     
-    
-    
     private void OnEnable()
     {
         imgManager.trackedImagesChanged += OnChanged;
     }
-    
-    private bool isScanning = false;
-
-    public void StartScanning()
-    {
-        isScanning = true;
-    }
-
-    public void StopScanning()
-    {
-        isScanning = false;
-    }
-
 
     void OnChanged(ARTrackedImagesChangedEventArgs eventArgs)
     {
-        if (!isScanning) return; // Exit if not in scanning mode
-
         foreach (var newImg in eventArgs.added)
         {
-            Debug.Log($"{newImg.referenceImage.name} card has been detected");
-
+            Console.WriteLine($"{newImg.referenceImage.name} card has been detected");
             if (stringToCardTypeDictionary.TryGetValue(newImg.referenceImage.name, out CardTypeEnum cardType))
             {
                 OnCardScanned?.Invoke(cardType);
             }
             else
             {
-                Debug.Log($"{newImg.referenceImage.name} was not found in the image tracker dictionary");
-
+                Console.WriteLine($"{newImg.referenceImage.name} was not found in the image tracker dictionary");
             }
         }
     }
-
 }
