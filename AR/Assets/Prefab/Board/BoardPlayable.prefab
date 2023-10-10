@@ -29,7 +29,6 @@ Transform:
   m_LocalScale: {x: 0.08754943, y: 8.513527, z: 0.096920416}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6205045138273929112}
   - {fileID: 7424235210038568025}
   - {fileID: 8709766682290350315}
   - {fileID: 5507500204616686000}
@@ -82,9 +81,10 @@ Transform:
   - {fileID: 7207273219620164311}
   - {fileID: 7655308871043764805}
   - {fileID: 4899729448796869554}
-  - {fileID: 1513589504236454324}
-  - {fileID: 1939166072017635809}
   - {fileID: 8110090147654465288}
+  - {fileID: 1939166072017635809}
+  - {fileID: 1513589504236454324}
+  - {fileID: 6205045138273929112}
   - {fileID: 2829265688432363238}
   - {fileID: 309078993723072394}
   - {fileID: 7766995111269549319}
@@ -344,12 +344,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (45)
+      value: tileGreen (14)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: GreenPathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -443,12 +443,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (1)
+      value: tileBlue (13)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: BluePathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -542,12 +542,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (37)
+      value: tileGreen (6)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: GreenPathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -641,12 +641,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (31)
+      value: tileYellow (12)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: YellowPathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -1141,12 +1141,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (32)
+      value: tileGreen (1)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: GreenPathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -1240,12 +1240,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (9)
+      value: tileRed (5)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: RedPathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -1339,12 +1339,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (3)
+      value: tileBlue (12)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: BluePathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -1438,12 +1438,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (30)
+      value: tileYellow (12)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: YellowPathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -1537,12 +1537,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (26)
+      value: tileYellow (8)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: YellowPathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -1735,12 +1735,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (13)
+      value: tileRed (9)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: RedPathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -1834,12 +1834,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (40)
+      value: tileGreen (9)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: GreenPathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -1933,12 +1933,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (41)
+      value: tileGreen (10)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: GreenPathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -2032,12 +2032,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (39)
+      value: tileGreen (8)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: GreenPathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -2329,12 +2329,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (17)
+      value: tileRed (13)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: RedPathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -2428,12 +2428,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (15)
+      value: tileRed (11)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: RedPathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -2923,12 +2923,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (49)
+      value: tileBlue (4)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: BluePathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -3022,12 +3022,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (33)
+      value: tileGreen (2)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: GreenPathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -3121,12 +3121,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (23)
+      value: tileYellow (5)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: YellowPathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -3814,12 +3814,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (14)
+      value: tileRed (10)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: RedPathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -3913,12 +3913,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (43)
+      value: tileGreen (12)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: GreenPathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -4309,12 +4309,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (44)
+      value: tileGreen (13)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: GreenPathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -4408,12 +4408,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (18)
+      value: tileRed (14)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: RedPathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -4705,12 +4705,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (35)
+      value: tileGreen (4)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: GreenPathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -4804,12 +4804,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile
+      value: tileBlue (14)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: BluePathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -5007,12 +5007,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (52)
+      value: tileBlue (7)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: BluePathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -5106,12 +5106,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (46)
+      value: tileBlue (1)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: BluePathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -5403,12 +5403,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (47)
+      value: tileBlue (2)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: BluePathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -5601,12 +5601,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (11)
+      value: tileRed (7)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: RedPathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -5898,12 +5898,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (55)
+      value: tileBlue (10)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: BluePathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -5997,12 +5997,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (42)
+      value: tileGreen (11)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: GreenPathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -6200,12 +6200,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (7)
+      value: tileRed (3)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: RedPathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -6299,12 +6299,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (8)
+      value: tileRed (4)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: RedPathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -6497,12 +6497,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (16)
+      value: tileRed (12)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: RedPathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -6695,12 +6695,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (25)
+      value: tileYellow (7)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: YellowPathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -6794,12 +6794,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (36)
+      value: tileGreen (5)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: GreenPathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -6992,12 +6992,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (4)
+      value: tileBlue (11)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: BluePathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -7289,12 +7289,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (24)
+      value: tileYellow (6)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: YellowPathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -7388,12 +7388,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (48)
+      value: tileBlue (3)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: BluePathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -7487,12 +7487,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (22)
+      value: tileYellow (4)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: YellowPathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -7586,12 +7586,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (20)
+      value: tileYellow (2)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: YellowPathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -7685,12 +7685,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (6)
+      value: tileRed (2)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: RedPathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -7784,12 +7784,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (10)
+      value: tileRed (6)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: RedPathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -7982,12 +7982,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (50)
+      value: tileBlue (5)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: BluePathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -8081,12 +8081,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (53)
+      value: tileBlue (8)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: BluePathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -8284,12 +8284,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (28)
+      value: tileYellow (10)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: YellowPathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -8383,12 +8383,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (21)
+      value: tileYellow (3)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: YellowPathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -8482,12 +8482,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (5)
+      value: tileRed (1)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: RedPathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -8581,12 +8581,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (27)
+      value: tileYellow (9)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: YellowPathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -8779,12 +8779,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (56)
+      value: tileYellow (14)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: YellowPathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -8878,12 +8878,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (19)
+      value: tileYellow (1)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: YellowPathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -8977,12 +8977,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (38)
+      value: tileGreen (7)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: GreenPathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -9076,12 +9076,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (34)
+      value: tileGreen (3)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: GreenPathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -9175,12 +9175,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (29)
+      value: tileYellow (11)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: YellowPathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -9274,12 +9274,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (12)
+      value: tileRed (8)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: RedPathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -9373,12 +9373,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (51)
+      value: tileBlue(6)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: BluePathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -9571,12 +9571,12 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_Name
-      value: tile (54)
+      value: tileBlue (9)
       objectReference: {fileID: 0}
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: Tile
+      value: BluePathTile
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
