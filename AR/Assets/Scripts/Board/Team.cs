@@ -6,9 +6,9 @@ namespace Board
  */
     public enum Team
     {
-        BlueOrWater = 4,
-        RedOrHeart = 0,
-        GreenOrEmerald = 3,
-        YellowOrStar = 2
+        BlueOrWater = 0,
+        RedOrHeart = 1,
+        GreenOrEmerald = 2,
+        YellowOrStar = 3
     }
 }
