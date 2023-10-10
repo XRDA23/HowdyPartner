@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Board;
 using UnityEngine;
 
@@ -9,6 +10,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject bluePawnPrefab;
     [SerializeField] private GameObject yellowPawnPrefab;
     [SerializeField] private GameObject greenPawnPrefab;
+    [SerializeField] private GameObject boardPrefab;
+    // List to store paths
+    private List<GameObject[]> paths = new List<GameObject[]>(); 
+
+    private int currentPathIndex = 0; // Variable to keep track of current path
+
+    private int currentStep = 0; // Variable to keep track of current step on path
+
 
     private GameObject[] pawns = new GameObject[16];
     private int currentPawnIndex = 0;
@@ -17,10 +26,36 @@ public class GameManager : MonoBehaviour
     
     private bool isSwitching = false;
     private GameObject selectedPawn;
+    private int[] currentSteps = new int[56];
 
-    void Start()
+    public void StartGame()
     {
+        // Spawn the board prefab 
+        SpawnBoardPrefab();
+
+        // Spawn the pawns
         SpawnPawns();
+        GameObject[] redPath = GameObject.FindGameObjectsWithTag("RedPathTile"); 
+        GameObject[] yellowPath = GameObject.FindGameObjectsWithTag("YellowPathTile"); 
+        GameObject[] greenPath = GameObject.FindGameObjectsWithTag("GreenPathTile"); 
+        GameObject[] bluePath = GameObject.FindGameObjectsWithTag("BluePathTile"); 
+
+        paths.Add(redPath);
+        paths.Add(yellowPath);
+        paths.Add(greenPath);
+        paths.Add(bluePath);
+    }
+    void SpawnBoardPrefab()
+    {
+        // Setting the position of board
+        Vector3 boardPosition = new Vector3(0, -7f, 9f); 
+
+        // Instantiate the board prefab
+        GameObject boardInstance = Instantiate(boardPrefab, boardPosition, Quaternion.identity);
+        
+        // Adjust the rotation of the board
+           boardInstance.transform.rotation = Quaternion.Euler(0, -180, 0);
+
     }
 
     void Update()
@@ -34,7 +69,13 @@ public class GameManager : MonoBehaviour
             {
                 if (pawns[currentPawnIndex] != null)
                 {
-                    MoveCurrentPawn(hit.point);
+                 
+                    GameObject selectedPawn = pawns[currentPawnIndex]; 
+
+        
+                    int nrOfSteps = 3; 
+
+                    MoveCurrentPawn(nrOfSteps);
                 }
             }
         }
@@ -86,15 +127,60 @@ GameObject GetPawnPrefab(Team color)
     }
 }
 
-void MoveCurrentPawn(Vector3 targetPosition)
+public void MoveCurrentPawn(int nrOfSteps)
 {
     if (pawns[currentPawnIndex] != null)
     {
-        pawns[currentPawnIndex].transform.position = targetPosition;
+        Team currentTeam = GetCurrentPawnTeam();
+
+        GameObject[] currentPath = GetPathForTeam(currentTeam);
+
+        if (currentStep + nrOfSteps <= currentPath.Length) // Adjusted condition
+        {
+            currentStep += nrOfSteps;
+
+            Vector3 targetPosition = currentPath[currentStep - 1].transform.position; // Adjusted index
+            pawns[currentPawnIndex].transform.position = targetPosition;
+        }
+        else
+        {
+            // Handle case where pawn completes the path
+            SwitchToNextPath();
+        }
     }
 }
 
 
+
+private Team GetCurrentPawnTeam()
+{
+    PawnLogic pawnLogic = pawns[currentPawnIndex].GetComponent<PawnLogic>();
+    Debug.Log("Current Pawn Team: " + pawnLogic.team); // Debug
+    return pawnLogic.team;
+}
+
+private GameObject[] GetPathForTeam(Team team)
+{
+    switch (team)
+    {
+        case Team.RedOrHeart:
+            return paths[0]; 
+        case Team.BlueOrWater:
+            return paths[3]; 
+        case Team.GreenOrEmerald:
+            return paths[2]; 
+        case Team.YellowOrStar:
+            return paths[1]; 
+        default:
+            return null; 
+    }
+}
+
+void SwitchToNextPath()
+{
+    currentPathIndex = (currentPathIndex + 1) % paths.Count;
+    currentStep = 0; // Reset current step
+}
 
 public void SelectPawn(GameObject pawn)
 {
@@ -103,6 +189,7 @@ public void SelectPawn(GameObject pawn)
         if (pawns[i] == pawn)
         {
             currentPawnIndex = i;
+            Debug.Log("Current Pawn : " + pawn); // Debug
             return;
         }
     }
