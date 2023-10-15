@@ -226,7 +226,14 @@ public class UILogicManager : MonoBehaviour
             }
         }
     }
-
+    private void ToggleBoardVisibilityAndPawnVisibility()
+    {
+        // Show board
+        gameManager.ToggleBoardVisibility();
+        // Show pawns
+        gameManager.TogglePawnVisibility(true);
+    }
+    
     private void OnOption1ButtonClicked()
     {
         Debug.Log("Option 1 selected!");
