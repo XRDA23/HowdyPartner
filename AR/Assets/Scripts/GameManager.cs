@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject boardPrefab;
     // List to store paths
     private List<GameObject[]> paths = new List<GameObject[]>(); 
+    [SerializeField] private Renderer boardRenderer;
 
     private int currentPathIndex = 0; // Variable to keep track of current path
 
@@ -32,7 +33,6 @@ public class GameManager : MonoBehaviour
     {
         // Spawn the board prefab 
         SpawnBoardPrefab();
-
         // Spawn the pawns
         SpawnPawns();
         GameObject[] redPath = GameObject.FindGameObjectsWithTag("RedPathTile"); 
@@ -55,7 +55,18 @@ public class GameManager : MonoBehaviour
         
         // Adjust the rotation of the board
            boardInstance.transform.rotation = Quaternion.Euler(0, -180, 0);
+           
+           // Get board renderer
+           boardRenderer = boardInstance.GetComponent<Renderer>();
 
+    }
+    
+    public void ToggleBoardVisibility()
+    {
+        if (boardRenderer != null)
+        {
+            boardRenderer.enabled = !boardRenderer.enabled;
+        }
     }
 
     void Update()
