@@ -224,7 +224,9 @@ public class UILogicManager : MonoBehaviour
             {
                 Debug.LogError("detectedCardText is null.");
             }
-        }
+        } 
+        // Delay by 3 seconds
+        Invoke("ToggleBoardVisibilityAndPawnVisibility", 3.0f);
     }
     private void ToggleBoardVisibilityAndPawnVisibility()
     {
