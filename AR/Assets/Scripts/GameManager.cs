@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     // List to store paths
     private List<GameObject[]> paths = new List<GameObject[]>(); 
     [SerializeField] private Renderer boardRenderer;
+    private Renderer pawnRenderer;
 
     private int currentPathIndex = 0; // Variable to keep track of current path
 
@@ -33,6 +34,10 @@ public class GameManager : MonoBehaviour
     {
         // Spawn the board prefab 
         SpawnBoardPrefab();
+
+        // Get pawn renderer
+        pawnRenderer = GetComponent<Renderer>();
+
         // Spawn the pawns
         SpawnPawns();
         GameObject[] redPath = GameObject.FindGameObjectsWithTag("RedPathTile"); 
@@ -69,6 +74,21 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void TogglePawnVisibility(bool isVisible)
+    {
+        for (int i = 0; i < pawns.Length; i++)
+        {
+            if (pawns[i] != null)
+            {
+                Renderer[] renderers = pawns[i].GetComponentsInChildren<Renderer>();
+                foreach (Renderer renderer in renderers)
+                {
+                    renderer.enabled = isVisible;
+                }
+            }
+        }
+    }
+    
     void Update()
     {
         if (Input.GetMouseButtonDown(0) && canMove)
