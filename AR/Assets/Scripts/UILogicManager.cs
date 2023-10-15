@@ -213,21 +213,21 @@ public class UILogicManager : MonoBehaviour
         {
             SetupOptionPanelForCard(cardType);
         }
+
+        if (detectedCardText != null)
+        {
+            detectedCardText.text = "Detected Card: " + cardType;
+            detectedCardText.gameObject.SetActive(true);
+        }
         else
         {
-            if (detectedCardText != null)
-            {
-                detectedCardText.text = "Detected Card: " + cardType;
-                detectedCardText.gameObject.SetActive(true);
-            }
-            else
-            {
-                Debug.LogError("detectedCardText is null.");
-            }
+            Debug.LogError("detectedCardText is null.");
         } 
+
         // Delay by 3 seconds
         Invoke("ToggleBoardVisibilityAndPawnVisibility", 3.0f);
     }
+
     private void ToggleBoardVisibilityAndPawnVisibility()
     {
         // Show board
