@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Board;
 using UnityEngine;
 
@@ -195,15 +196,19 @@ private GameObject[] GetPathForTeam(Team team)
     switch (team)
     {
         case Team.RedOrHeart:
-            return paths[0]; 
+            return GameObject.Find("RedPath").GetComponentsInChildren<Transform>()
+                .Where(child => child.gameObject.tag == "RedPathTile").Select(child => child.gameObject).ToArray();
         case Team.BlueOrWater:
-            return paths[3]; 
-        case Team.GreenOrEmerald:
-            return paths[2]; 
+            return GameObject.Find("BluePath").GetComponentsInChildren<Transform>()
+                .Where(child => child.gameObject.tag == "BluePathTile").Select(child => child.gameObject).ToArray();
         case Team.YellowOrStar:
-            return paths[1]; 
+            return GameObject.Find("YellowPath").GetComponentsInChildren<Transform>()
+                .Where(child => child.gameObject.tag == "YellowPathTile").Select(child => child.gameObject).ToArray();
+        case Team.GreenOrEmerald:
+            return GameObject.Find("GreenPath").GetComponentsInChildren<Transform>()
+                .Where(child => child.gameObject.tag == "GreenPathTile").Select(child => child.gameObject).ToArray();
         default:
-            return null; 
+            return null;
     }
 }
 
