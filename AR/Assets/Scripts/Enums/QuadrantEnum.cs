@@ -1,4 +1,4 @@
-namespace Board
+namespace Enums
 {
     /**
  * Enum definition that contains all possible quadrants.
@@ -6,7 +6,7 @@ namespace Board
  * **Quadrants is not a good name because it implies that it's devided in four
  * ** but I use it for lack of better wording
  */
-    public enum Quadrant
+    public enum QuadrantEnum
     {
         One = 0,
         Two = 1,

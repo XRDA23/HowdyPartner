@@ -1,14 +1,16 @@
-namespace Board
+using Enums;
+
+namespace Models
 {
     
     public class BoardPosition
     {
-        private Quadrant quadrant;
-        private TileNumber tileNo;
+        private QuadrantEnum quadrantEnum;
+        private TileNumberEnum tileNo;
     
-        public BoardPosition(Quadrant quadrant, TileNumber tileNo)
+        public BoardPosition(QuadrantEnum quadrantEnum, TileNumberEnum tileNo)
         {
-            this.quadrant = quadrant;
+            this.quadrantEnum = quadrantEnum;
             this.tileNo = tileNo;
         }
     
@@ -19,7 +21,7 @@ namespace Board
          * private bool homeBase;
          * private bool endBase;
          * private int endBasePosition; --> 0-5
-         * public BoardPosition(Quadrant? quadrant, TileNumber? tileNo, bool homeBase, bool endBase, int? endBasePosition)
+         * public BoardPosition(QuadrantEnum? quadrantEnum, TileNumberEnum? tileNo, bool homeBase, bool endBase, int? endBasePosition)
          * {
          *      this.homeBase = homeBase;
          *      this.endBase = endBase;
@@ -31,7 +33,7 @@ namespace Board
          * 
          *      if (!endBase && !homeBase)
          *      {
-         *          this.quadrant = quadrant;
+         *          this.quadrantEnum = quadrantEnum;
          *          this.tileNo = tileNo;
          *      }
          * }

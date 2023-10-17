@@ -1,10 +1,10 @@
-namespace Board
+namespace Enums
 {
     /*
  * This is an enum for the tile numbers inside a quadrant
  * An enum was chose instead of an int for more control over the values that it can take
  */
-    public enum TileNumber
+    public enum TileNumberEnum
     {
         Heart = 0,
         One = 1,
