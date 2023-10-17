@@ -5,8 +5,8 @@ namespace Models
     
     public class BoardPosition
     {
-        private QuadrantEnum quadrantEnum;
-        private TileNumberEnum tileNo;
+        public QuadrantEnum quadrantEnum { get; set; }
+        public TileNumberEnum tileNo { get; set; }
     
         public BoardPosition(QuadrantEnum quadrantEnum, TileNumberEnum tileNo)
         {

@@ -20,6 +20,12 @@ namespace Enums
         Eleven = 11,
         Twelve = 12,
         Thirteen = 13,
-        Fourteen = 14
+        Fourteen = 14,
+        Arrow = 15,
+        EndBase1 = 16,
+        EndBase2 = 17,
+        EndBase3 = 18,
+        EndBase4 = 19,
+        HomeBase = 20
     }
 }

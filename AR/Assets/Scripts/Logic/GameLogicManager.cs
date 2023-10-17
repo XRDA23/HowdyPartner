@@ -2,37 +2,23 @@ using System.Collections.Generic;
 using System.Linq;
 using Enums;
 using Models;
+using UI;
 using UnityEngine;
 
 namespace Logic
 {
-    public class GameLogicManager : MonoBehaviour
+    public class GameLogic : MonoBehaviour, IGameLogic
     {
-        public LayerMask tileLayer;
-
         [SerializeField] private GameObject redPawnPrefab;
         [SerializeField] private GameObject bluePawnPrefab;
         [SerializeField] private GameObject yellowPawnPrefab;
         [SerializeField] private GameObject greenPawnPrefab;
         [SerializeField] private GameObject boardPrefab;
-        // List to store paths
-        private List<GameObject[]> paths = new List<GameObject[]>(); 
         [SerializeField] private Renderer boardRenderer;
         private Renderer pawnRenderer;
-
-        private int currentPathIndex = 0; // Variable to keep track of current path
-
-        private int currentStep = 0; // Variable to keep track of current step on path
-
-
-        private GameObject[] pawns = new GameObject[16];
-        private int currentPawnIndex = 0;
-    
-        private bool canMove = true;
-    
-        private bool isSwitching = false;
-        private GameObject selectedPawn;
-        private int[] currentSteps = new int[56];
+        private List<Pawn> pawns = new();
+        private Pawn selectedPawn;
+        private BoardLogic boardLogic;
 
         public void StartGame()
         {
@@ -44,16 +30,13 @@ namespace Logic
 
             // Spawn the pawns
             SpawnPawns();
-            GameObject[] redPath = GameObject.FindGameObjectsWithTag("RedPathTile"); 
-            GameObject[] yellowPath = GameObject.FindGameObjectsWithTag("YellowPathTile"); 
-            GameObject[] greenPath = GameObject.FindGameObjectsWithTag("GreenPathTile"); 
-            GameObject[] bluePath = GameObject.FindGameObjectsWithTag("BluePathTile"); 
-
-            paths.Add(redPath);
-            paths.Add(yellowPath);
-            paths.Add(greenPath);
-            paths.Add(bluePath);
         }
+
+        public BoardPosition PlayCard(Pawn chosenPawn, CardActionEnum cardAction)
+        {
+            return boardLogic.HandleCardPlayed(chosenPawn, cardAction);
+        }
+
         void SpawnBoardPrefab()
         {
             // Setting the position of board
@@ -67,7 +50,6 @@ namespace Logic
            
             // Get board renderer
             boardRenderer = boardInstance.GetComponent<Renderer>();
-
         }
     
         public void ToggleBoardVisibility()
@@ -80,42 +62,14 @@ namespace Logic
 
         public void TogglePawnVisibility(bool isVisible)
         {
-            for (int i = 0; i < pawns.Length; i++)
+            foreach (var pawn in pawns)
             {
-                if (pawns[i] != null)
-                {
-                    Renderer[] renderers = pawns[i].GetComponentsInChildren<Renderer>();
-                    foreach (Renderer renderer in renderers)
-                    {
-                        renderer.enabled = isVisible;
-                    }
-                }
+                pawn.GetComponentInChildren<Renderer>().enabled = isVisible;
             }
         }
     
-        void Update()
-        {
-            if (Input.GetMouseButtonDown(0) && canMove)
-            {
-                RaycastHit hit;
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity, tileLayer))
-                {
-                    if (pawns[currentPawnIndex] != null)
-                    {
-                 
-                        GameObject selectedPawn = pawns[currentPawnIndex]; 
-
+        //TODO: Create a bool method that returns whether a pawn is able to move or not 17.10.23
         
-                        int nrOfSteps = 3; 
-
-                        MoveCurrentPawn(nrOfSteps);
-                    }
-                }
-            }
-        }
-    
         void SpawnPawns()
         {
             GameObject[] redTiles = GameObject.FindGameObjectsWithTag("BaseRedTile");
@@ -123,28 +77,26 @@ namespace Logic
             GameObject[] yellowTiles = GameObject.FindGameObjectsWithTag("BaseYellowTile");
             GameObject[] greenTiles = GameObject.FindGameObjectsWithTag("BaseGreenTile");
 
-            SpawnPawnsForColor(redTiles, TeamEnum.RedOrHeart, 4);
-            SpawnPawnsForColor(blueTiles, TeamEnum.BlueOrWater, 4);
-            SpawnPawnsForColor(yellowTiles, TeamEnum.YellowOrStar, 4);
-            SpawnPawnsForColor(greenTiles, TeamEnum.GreenOrEmerald, 4);
+            SpawnPawnsForColor(redTiles, TeamEnum.RedOrHeart);
+            SpawnPawnsForColor(blueTiles, TeamEnum.BlueOrWater);
+            SpawnPawnsForColor(yellowTiles, TeamEnum.YellowOrStar);
+            SpawnPawnsForColor(greenTiles, TeamEnum.GreenOrEmerald);
         }
 
-        void SpawnPawnsForColor(GameObject[] baseTiles, TeamEnum color, int count)
+        void SpawnPawnsForColor(GameObject[] baseTiles, TeamEnum color)
         {
-            int pawnCount = Mathf.Min(baseTiles.Length, count);
-
-            for (int i = 0; i < pawnCount; i++)
+            for (var i = 0; i < 4; i++)
             {
-                GameObject pawnPrefab = GetPawnPrefab(color);
+                var pawnPrefab = GetPawnPrefab(color);
 
-                pawns[currentPawnIndex] = Instantiate(pawnPrefab, baseTiles[i].transform.position, Quaternion.identity);
-                Pawn pawn = pawns[currentPawnIndex].GetComponent<Pawn>();
-                pawn.gameLogicManager = this;
+                var pawn = Instantiate(pawnPrefab, baseTiles[i].transform.position, Quaternion.identity).GetComponent<Pawn>();
+                pawn.gameLogic = this;
                 pawn.teamEnum = color;
-
-                currentPawnIndex++;
+                
+                pawns.Add(pawn);
             }
         }
+        
         GameObject GetPawnPrefab(TeamEnum color)
         {
             switch (color)
@@ -161,79 +113,5 @@ namespace Logic
                     return null;
             }
         }
-
-        public void MoveCurrentPawn(int nrOfSteps)
-        {
-            if (pawns[currentPawnIndex] != null)
-            {
-                TeamEnum currentTeamEnum = GetCurrentPawnTeam();
-
-                GameObject[] currentPath = GetPathForTeam(currentTeamEnum);
-
-                if (currentStep + nrOfSteps <= currentPath.Length) // Adjusted condition
-                {
-                    currentStep += nrOfSteps;
-
-                    Vector3 targetPosition = currentPath[currentStep - 1].transform.position; // Adjusted index
-                    pawns[currentPawnIndex].transform.position = targetPosition;
-                }
-                else
-                {
-                    // Handle case where pawn completes the path
-                    SwitchToNextPath();
-                }
-            }
-        }
-
-
-
-        private TeamEnum GetCurrentPawnTeam()
-        {
-            Pawn pawn = pawns[currentPawnIndex].GetComponent<Pawn>();
-            Debug.Log("Current Pawn Team: " + pawn.teamEnum); // Debug
-            return pawn.teamEnum;
-        }
-
-        private GameObject[] GetPathForTeam(TeamEnum teamEnum)
-        {
-            switch (teamEnum)
-            {
-                case TeamEnum.RedOrHeart:
-                    return GameObject.Find("RedPath").GetComponentsInChildren<Transform>()
-                        .Where(child => child.gameObject.tag == "RedPathTile").Select(child => child.gameObject).ToArray();
-                case TeamEnum.BlueOrWater:
-                    return GameObject.Find("BluePath").GetComponentsInChildren<Transform>()
-                        .Where(child => child.gameObject.tag == "BluePathTile").Select(child => child.gameObject).ToArray();
-                case TeamEnum.YellowOrStar:
-                    return GameObject.Find("YellowPath").GetComponentsInChildren<Transform>()
-                        .Where(child => child.gameObject.tag == "YellowPathTile").Select(child => child.gameObject).ToArray();
-                case TeamEnum.GreenOrEmerald:
-                    return GameObject.Find("GreenPath").GetComponentsInChildren<Transform>()
-                        .Where(child => child.gameObject.tag == "GreenPathTile").Select(child => child.gameObject).ToArray();
-                default:
-                    return null;
-            }
-        }
-
-        void SwitchToNextPath()
-        {
-            currentPathIndex = (currentPathIndex + 1) % paths.Count;
-            currentStep = 0; // Reset current step
-        }
-
-        public void SelectPawn(GameObject pawn)
-        {
-            for (int i = 0; i < pawns.Length; i++)
-            {
-                if (pawns[i] == pawn)
-                {
-                    currentPawnIndex = i;
-                    Debug.Log("Current Pawn : " + pawn); // Debug
-                    return;
-                }
-            }
-        }
-
-
     }
 }

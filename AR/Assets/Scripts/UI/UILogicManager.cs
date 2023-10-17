@@ -18,12 +18,13 @@ namespace UI
         [SerializeField] private TextMeshProUGUI gameRuleInfoText;
         [SerializeField] private Button showTurnButton;
         [SerializeField] private Button scanCardButton;
-        [SerializeField] private GameLogicManager gameLogicManager;
+        [SerializeField] private GameLogic gameLogic;
         [SerializeField] private ImageTrackerScript imageTracker;
         [SerializeField] private TextMeshProUGUI detectedCardText;
         [SerializeField] private GameObject optionPanel;
         [SerializeField] private Button option1Button;
         [SerializeField] private Button option2Button;
+        public LayerMask tileLayer;
 
 
         private List<TeamEnum> teams = new List<TeamEnum>();
@@ -81,15 +82,6 @@ namespace UI
             imageTracker.OnCardScanned -= HandleCardScanned;
         }
 
-
-        void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                Debug.Log("Space was pressed!");
-            }
-        }
-
         private void OnStartButtonClicked()
         {
             Debug.Log("Start game button was clicked!");
@@ -99,7 +91,7 @@ namespace UI
             gameTitleText.gameObject.SetActive(false);
 
             // Call the StartGame method from the GameManager
-            gameLogicManager.StartGame();
+            gameLogic.StartGame();
 
             // Display 'Show turn' button
             showTurnButton.gameObject.SetActive(true);
@@ -128,18 +120,17 @@ namespace UI
             gameRuleInfoText.gameObject.SetActive(false);
         }
 
-
         public void OnScanButtonClicked()
         {
             // For now, hide the elements.
             Debug.Log("Scan card Button was clicked!");
         
-            if (gameLogicManager != null)
+            if (gameLogic != null)
             {
                 // Hide board
-                gameLogicManager.ToggleBoardVisibility();
+                gameLogic.ToggleBoardVisibility();
                 // Hide pawns
-                gameLogicManager.TogglePawnVisibility(false); 
+                gameLogic.TogglePawnVisibility(false); 
             }
 
             scanCardButton.gameObject.SetActive(false);
@@ -156,7 +147,6 @@ namespace UI
 
             Debug.Log("Started scanning for a card...");
         }
-
 
         private void UpdateTurnIndicator(TeamEnum teamEnum)
         {
@@ -205,7 +195,6 @@ namespace UI
             optionPanel.SetActive(true);
         }
 
-
         private void HandleCardScanned(CardTypeEnum cardType)
         {
             Debug.Log("HandleCardScanned method entered.");
@@ -234,9 +223,9 @@ namespace UI
         private void ToggleBoardVisibilityAndPawnVisibility()
         {
             // Show board
-            gameLogicManager.ToggleBoardVisibility();
+            gameLogic.ToggleBoardVisibility();
             // Show pawns
-            gameLogicManager.TogglePawnVisibility(true);
+            gameLogic.TogglePawnVisibility(true);
         }
     
         private void OnOption1ButtonClicked()
@@ -251,11 +240,47 @@ namespace UI
             optionPanel.SetActive(false);
         }
 
-
         // Method to convert enum values to a list.
         private List<T> EnumToList<T>()
         {
             return new List<T>((T[])Enum.GetValues(typeof(T)));
+        }
+
+        void Update()
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                RaycastHit hit;
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity, tileLayer))
+                {
+                    //TODO: implement SelectPawn first
+                    // if (pawns[currentPawnIndex] != null)
+                    // {
+                    //
+                    //     GameObject selectedPawn = pawns[currentPawnIndex]; 
+                    //
+                    //
+                    //     int nrOfSteps = 3; 
+                    //
+                    //     MoveCurrentPawn(nrOfSteps);
+                    // }
+                }
+            }
+        }
+        public void SelectPawn(GameObject pawn)
+        {
+            //TODO: Get selected pawn and store it for calling the game logic
+            // for (int i = 0; i < pawns.Length; i++)
+            // {
+            //     if (pawns[i] == pawn)
+            //     {
+            //         currentPawnIndex = i;
+            //         Debug.Log("Current Pawn : " + pawn); // Debug
+            //         return;
+            //     }
+            // }
         }
     }
 }
