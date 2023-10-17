@@ -6,9 +6,8 @@ namespace Logic
 {
     public class BoardLogic
     {
-        private int
-            noOfPlayers { get; set; } // we have home and end bases as many as we have players - easier scalability
-
+        // we have home and end bases as many as we have players - easier scalability
+        private int noOfPlayers { get; set; } 
         private HomeBase[] homeBases;
         private EndBase[] endBases;
         [SerializeField] private GameObject currentPawn;
@@ -23,100 +22,109 @@ namespace Logic
 
         //What methods will the GameLogic call on this class? - need to be added
 
-        public void HandleCardPlayed(CardTypeEnum cardType)
+    public GameObject[] HandleCardPlayed(TeamEnum team, GameObject[] pawns, CardActionEnum cardAction)
+    {
+        switch (cardAction)
         {
-            //TODO: Set pawns as appropriate - Aldís 24.09.23
-            switch (cardType)
-            {
-                case CardTypeEnum.Switch:
-                    Console.WriteLine("Switch");
-                    OnSwitchPlayed();
-                    break;
-                case CardTypeEnum.OneOrFourteen:
-                    Console.WriteLine("1 or 14");
-                    //TODO: Display prompt to decide which number to use - Aldís 24.09.23
-                    OnMoveForwardPlayed(14);
-                    break;
-                case CardTypeEnum.Two:
-                    Console.WriteLine("2");
-                    OnMoveForwardPlayed(2);
-                    break;
-                case CardTypeEnum.Three:
-                    Console.WriteLine("3");
-                    OnMoveForwardPlayed(3);
-
-                    break;
-                case CardTypeEnum.FourBackwards:
-                    Console.WriteLine("4 backwards");
-                    OnMoveBackwardsPlayed(4);
-
-                    break;
-                case CardTypeEnum.Five:
-                    Console.WriteLine("5");
-                    OnMoveForwardPlayed(5);
-
-                    break;
-                case CardTypeEnum.Six:
-                    Console.WriteLine("6");
-                    OnMoveForwardPlayed(6);
-                    break;
-                case CardTypeEnum.SevenTimesOne:
-                    Console.WriteLine("7x1");
-                    //TODO: Need info on what pawns and how many steps each - Aldís 24.09.23
-                    OnMoveForwardPlayed(7);
-                    break;
-                case CardTypeEnum.HeartOrEight:
-                    Console.WriteLine("Heart or 8");
-                    //TODO: Display prompt to decide which to use - Aldís 24.09.23
-                    OnMoveForwardPlayed(8);
-                    SpawnPawn();
-                    break;
-                case CardTypeEnum.Nine:
-                    Console.WriteLine("9");
-                    OnMoveForwardPlayed(9);
-                    break;
-                case CardTypeEnum.Ten:
-                    Console.WriteLine("10");
-                    OnMoveForwardPlayed(10);
-                    break;
-                case CardTypeEnum.Heart:
-                    Console.WriteLine("Heart");
-                    SpawnPawn();
-                    break;
-                case CardTypeEnum.Twelve:
-                    Console.WriteLine("12");
-                    OnMoveForwardPlayed(12);
-                    break;
-                case CardTypeEnum.HeartOrThirteen:
-                    Console.WriteLine("Heart or 13");
-                    //TODO: Display prompt to decide which to use - Aldís 24.09.23
-                    OnMoveForwardPlayed(13);
-                    SpawnPawn();
-                    break;
-                default:
-                    Console.WriteLine($"Unknown card: {cardType}");
-                    break;
-            }
+            case CardActionEnum.Switch:
+                Console.WriteLine("Switch");
+                OnSwitchPlayed(pawns);
+                break;
+            case CardActionEnum.One:
+                Console.WriteLine("1");
+                OnMoveForwardPlayed(1, pawns[0]);
+                break;
+            case CardActionEnum.Two:
+                Console.WriteLine("2");
+                OnMoveForwardPlayed(2, pawns[0]);
+                break;
+            case CardActionEnum.Three:
+                Console.WriteLine("3");
+                OnMoveForwardPlayed(3, pawns[0]);
+                break;
+            case CardActionEnum.FourBackwards:
+                Console.WriteLine("4 backwards");
+                OnMoveBackwardsPlayed(4, pawns[0]);
+                break;
+            case CardActionEnum.Five:
+                Console.WriteLine("5");
+                OnMoveForwardPlayed(5, pawns[0]);
+                break;
+            case CardActionEnum.Six:
+                Console.WriteLine("6");
+                OnMoveForwardPlayed(6, pawns[0]);
+                break;
+            case CardActionEnum.SevenTimesOne:
+                Console.WriteLine("7x1");
+                //TODO: Need to get an array of pawns to move one step, if the same pawn moves multiple times it needs to be duplicated in the array - Aldís 09.10.23
+                foreach (var pawn in pawns)
+                {
+                    OnMoveForwardPlayed(1, pawn);
+                }
+                break;
+            case CardActionEnum.Eight:
+                Console.WriteLine("8");
+                OnMoveForwardPlayed(8, pawns[0]);
+                break;
+            case CardActionEnum.Nine:
+                Console.WriteLine("9");
+                OnMoveForwardPlayed(9, pawns[0]);
+                break;
+            case CardActionEnum.Ten:
+                Console.WriteLine("10");
+                OnMoveForwardPlayed(10, pawns[0]);
+                break;
+            case CardActionEnum.Heart:
+                Console.WriteLine("Heart");
+                SpawnPawn(team);
+                break;
+            case CardActionEnum.Twelve:
+                Console.WriteLine("12");
+                OnMoveForwardPlayed(12, pawns[0]);
+                break;
+            case CardActionEnum.Thirteen:
+                Console.WriteLine("13");
+                //TODO: Display prompt to decide which to use - Aldís 24.09.23
+                OnMoveForwardPlayed(13, pawns[0]);
+                break;
+            case CardActionEnum.Fourteen:
+                Console.WriteLine("14");
+                OnMoveForwardPlayed(14, pawns[0]);
+                break;
+            default:
+                Console.WriteLine($"Unknown card: {cardAction}");
+                break;
         }
+        return pawns;
+    }
 
-        private void OnSwitchPlayed()
-        {
-        }
+    private void OnSwitchPlayed(GameObject[] pawns)
+    {
+        (pawns[0].transform.position, pawns[1].transform.position) = (pawns[1].transform.position, pawns[0].transform.position);
+    }
 
-        private void OnMoveForwardPlayed(int nrOfSteps)
-        {
-        }
+    private void OnMoveForwardPlayed(int nrOfSteps, GameObject pawn)
+    {
+        //TODO: Call board to know where to physically move the pawn - Aldís 09.10.23
+        // pawn.position = boardPosition.getTileXStepsAhead(int nrOfSteps)
+    }
 
-        private void OnMoveBackwardsPlayed(int nrOfSteps)
-        {
-        }
+    private void OnMoveBackwardsPlayed(int nrOfSteps, GameObject pawn)
+    {
+        //TODO: Call board position attribute of pawn to know where to physically move the pawn - Aldís 09.10.23
+        // pawn.position = boardPosition.getTileXStepsBack(int nrOfSteps)
+    }
 
-        private void SpawnPawn()
-        {
-        }
+    private void SpawnPawn(TeamEnum team)
+    {
+        //TODO: Move pawn from Team's home base to heart spawn point - Aldís 09.10.23
+        // board.getHomeBaseOfPlayer(team).Leave(pawn)
+    }
 
-        private void KillPawn()
-        {
-        }
+    private void KillPawn(TeamEnum team, GameObject pawn)
+    {
+        // TODO: Move pawn back to Team's home base. Home base methods would need to return a position - Aldís 09.10.23
+        // pawn.position = board.getHomeBaseOfPlayer(team).Return(pawn)
+    }
     }
 }
