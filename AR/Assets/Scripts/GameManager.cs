@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Board;
 using UnityEngine;
 
@@ -13,6 +14,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject boardPrefab;
     // List to store paths
     private List<GameObject[]> paths = new List<GameObject[]>(); 
+    [SerializeField] private Renderer boardRenderer;
+    private Renderer pawnRenderer;
 
     private int currentPathIndex = 0; // Variable to keep track of current path
 
@@ -32,6 +35,9 @@ public class GameManager : MonoBehaviour
     {
         // Spawn the board prefab 
         SpawnBoardPrefab();
+
+        // Get pawn renderer
+        pawnRenderer = GetComponent<Renderer>();
 
         // Spawn the pawns
         SpawnPawns();
@@ -55,9 +61,35 @@ public class GameManager : MonoBehaviour
         
         // Adjust the rotation of the board
            boardInstance.transform.rotation = Quaternion.Euler(0, -180, 0);
+           
+           // Get board renderer
+           boardRenderer = boardInstance.GetComponent<Renderer>();
 
     }
+    
+    public void ToggleBoardVisibility()
+    {
+        if (boardRenderer != null)
+        {
+            boardRenderer.enabled = !boardRenderer.enabled;
+        }
+    }
 
+    public void TogglePawnVisibility(bool isVisible)
+    {
+        for (int i = 0; i < pawns.Length; i++)
+        {
+            if (pawns[i] != null)
+            {
+                Renderer[] renderers = pawns[i].GetComponentsInChildren<Renderer>();
+                foreach (Renderer renderer in renderers)
+                {
+                    renderer.enabled = isVisible;
+                }
+            }
+        }
+    }
+    
     void Update()
     {
         if (Input.GetMouseButtonDown(0) && canMove)
@@ -164,15 +196,19 @@ private GameObject[] GetPathForTeam(Team team)
     switch (team)
     {
         case Team.RedOrHeart:
-            return paths[0]; 
+            return GameObject.Find("RedPath").GetComponentsInChildren<Transform>()
+                .Where(child => child.gameObject.tag == "RedPathTile").Select(child => child.gameObject).ToArray();
         case Team.BlueOrWater:
-            return paths[3]; 
-        case Team.GreenOrEmerald:
-            return paths[2]; 
+            return GameObject.Find("BluePath").GetComponentsInChildren<Transform>()
+                .Where(child => child.gameObject.tag == "BluePathTile").Select(child => child.gameObject).ToArray();
         case Team.YellowOrStar:
-            return paths[1]; 
+            return GameObject.Find("YellowPath").GetComponentsInChildren<Transform>()
+                .Where(child => child.gameObject.tag == "YellowPathTile").Select(child => child.gameObject).ToArray();
+        case Team.GreenOrEmerald:
+            return GameObject.Find("GreenPath").GetComponentsInChildren<Transform>()
+                .Where(child => child.gameObject.tag == "GreenPathTile").Select(child => child.gameObject).ToArray();
         default:
-            return null; 
+            return null;
     }
 }
 

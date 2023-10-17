@@ -130,6 +130,15 @@ public class UILogicManager : MonoBehaviour
     {
         // For now, hide the elements.
         Debug.Log("Scan card Button was clicked!");
+        
+        if (gameManager != null)
+        {
+            // Hide board
+            gameManager.ToggleBoardVisibility();
+            // Hide pawns
+            gameManager.TogglePawnVisibility(false); 
+        }
+
         scanCardButton.gameObject.SetActive(false);
         turnIndicatorText.gameObject.SetActive(false);
 
@@ -204,21 +213,29 @@ public class UILogicManager : MonoBehaviour
         {
             SetupOptionPanelForCard(cardType);
         }
+
+        if (detectedCardText != null)
+        {
+            detectedCardText.text = "Detected Card: " + cardType;
+            detectedCardText.gameObject.SetActive(true);
+        }
         else
         {
-            if (detectedCardText != null)
-            {
-                detectedCardText.text = "Detected Card: " + cardType;
-                detectedCardText.gameObject.SetActive(true);
-            }
-            else
-            {
-                Debug.LogError("detectedCardText is null.");
-            }
-        }
+            Debug.LogError("detectedCardText is null.");
+        } 
+
+        // Delay by 3 seconds
+        Invoke("ToggleBoardVisibilityAndPawnVisibility", 3.0f);
     }
 
-
+    private void ToggleBoardVisibilityAndPawnVisibility()
+    {
+        // Show board
+        gameManager.ToggleBoardVisibility();
+        // Show pawns
+        gameManager.TogglePawnVisibility(true);
+    }
+    
     private void OnOption1ButtonClicked()
     {
         Debug.Log("Option 1 selected!");
