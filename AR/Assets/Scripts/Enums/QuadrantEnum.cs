@@ -8,9 +8,9 @@ namespace Enums
  */
     public enum QuadrantEnum
     {
-        One = 0,
-        Two = 1,
-        Three = 2,
-        Four = 3
+        Blue = 0,
+        Red = 1,
+        Yellow = 2,
+        Green = 3
     }
 }
