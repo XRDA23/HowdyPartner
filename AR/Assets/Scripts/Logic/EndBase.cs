@@ -1,9 +1,12 @@
-namespace Board
+using Enums;
+using Models;
+
+namespace Logic
 {
     
 public class EndBase
 {
-    private Team team;
+    private TeamEnum teamEnum;
     /**
      * There are 5 tiles in the end base
      * 0 -> arrow
@@ -12,9 +15,9 @@ public class EndBase
      */
     private Pawn[] tiles = new Pawn[5];
 
-    public EndBase(Team team)
+    public EndBase(TeamEnum teamEnum)
     {
-        this.team = team;
+        this.teamEnum = teamEnum;
     }
 
     public void Enter(Pawn pawn, int noOfMoves)
