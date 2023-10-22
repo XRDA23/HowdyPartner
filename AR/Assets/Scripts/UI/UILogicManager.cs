@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Enums;
 using Logic;
+using Models;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,9 +26,15 @@ namespace UI
         [SerializeField] private Button option1Button;
         [SerializeField] private Button option2Button;
         public LayerMask tileLayer;
+        private Pawn selectedPawn; 
+        private bool canMove = true;
+        private int currentPawnIndex = 0;
 
 
         private List<TeamEnum> teams = new List<TeamEnum>();
+        public Material highlightMaterial;
+        private Material originalMaterial;
+        private List<Material> originalMaterials = new List<Material>(); 
 
         private void Start()
         {
@@ -37,7 +44,6 @@ namespace UI
             // Ensure only the start button and title text are shown
             gameTitleText.gameObject.SetActive(true);
             startButton.gameObject.SetActive(true);
-
             if (startButton != null)
             {
                 startButton.onClick.AddListener(OnStartButtonClicked);
@@ -46,7 +52,6 @@ namespace UI
             {
                 Debug.LogError("Start Button is not assigned in the inspector!");
             }
-
             if (scanCardButton != null)
             {
                 scanCardButton.onClick.AddListener(OnScanButtonClicked);
@@ -111,13 +116,26 @@ namespace UI
             // Randomly decide whose turn it is and display the turn indicator
             TeamEnum startingTeamEnum = teams[Random.Range(0, teams.Count)];
             UpdateTurnIndicator(startingTeamEnum);
-
+            
+            HandleOriginalMaterials();
+            
             turnIndicatorText.gameObject.SetActive(true); // Show the turn text
             scanCardButton.gameObject.SetActive(true);
 
             // Hide the "Show turn" button and game rule info after revealing the turn
             showTurnButton.gameObject.SetActive(false);
             gameRuleInfoText.gameObject.SetActive(false);
+        }
+        
+        private void HandleOriginalMaterials()
+        {
+            // Clearing the list to ensure it's empty
+            originalMaterials.Clear(); 
+            
+            for (int i = 0; i < gameLogic.pawns.Count; i++)
+            {
+                originalMaterials.Add(null); // a placeholder for now
+            }
         }
 
         public void OnScanButtonClicked()
@@ -245,7 +263,37 @@ namespace UI
         {
             return new List<T>((T[])Enum.GetValues(typeof(T)));
         }
+   
+        public void SelectPawn(GameObject pawn)
+        {
+            Debug.Log("Select clicked");
 
+            for (int i = 0; i < gameLogic.pawns.Count; i++)
+            {
+                if (gameLogic.pawns[i].gameObject == pawn)
+                {
+                    if (selectedPawn != null)
+                    {
+                        // Restore original material for the previously selected pawn
+                        Renderer selectedRenderer = selectedPawn.GetComponent<Renderer>();
+                        selectedRenderer.material = originalMaterials[currentPawnIndex];
+                    }
+
+                    selectedPawn = gameLogic.pawns[i];
+                    Debug.Log("Selected Pawn : " + selectedPawn.gameObject);
+    
+                    Renderer renderer = selectedPawn.GetComponent<Renderer>();
+
+                    // Store the original material for the selected pawn
+                    originalMaterials[currentPawnIndex] = renderer.material;
+
+                    // Highlight the selected pawn
+                    renderer.material = highlightMaterial;
+                    return;
+                }
+            }
+        }
+        
         void Update()
         {
             if (Input.GetMouseButtonDown(0))
@@ -253,34 +301,15 @@ namespace UI
                 RaycastHit hit;
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity, tileLayer))
+                if (Physics.Raycast(ray, out hit))
                 {
-                    //TODO: implement SelectPawn first
-                    // if (pawns[currentPawnIndex] != null)
-                    // {
-                    //
-                    //     GameObject selectedPawn = pawns[currentPawnIndex]; 
-                    //
-                    //
-                    //     int nrOfSteps = 3; 
-                    //
-                    //     MoveCurrentPawn(nrOfSteps);
-                    // }
+                    Pawn clickedPawn = hit.collider.GetComponent<Pawn>();
+                    if (clickedPawn != null)
+                    {
+                        SelectPawn(clickedPawn.gameObject);
+                    }
                 }
             }
-        }
-        public void SelectPawn(GameObject pawn)
-        {
-            //TODO: Get selected pawn and store it for calling the game logic
-            // for (int i = 0; i < pawns.Length; i++)
-            // {
-            //     if (pawns[i] == pawn)
-            //     {
-            //         currentPawnIndex = i;
-            //         Debug.Log("Current Pawn : " + pawn); // Debug
-            //         return;
-            //     }
-            // }
         }
     }
 }
