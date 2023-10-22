@@ -420,9 +420,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9832dbac7e591e4a94c1cef3cd0f28f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileLayer:
-    serializedVersion: 2
-    m_Bits: 8
   redPawnPrefab: {fileID: 1270749460028906, guid: ba1cf2d8c8a1153459fab02745f83681,
     type: 3}
   bluePawnPrefab: {fileID: 1790432356090350, guid: fa8fd3c6067eb614aa9ec14323666765,
@@ -435,6 +432,7 @@ MonoBehaviour:
     type: 3}
   boardRenderer: {fileID: 7234419482527384909, guid: c9824593c57eba94fb46f8132c8354c0,
     type: 3}
+  pawns: []
 --- !u!4 &374703343
 Transform:
   m_ObjectHideFlags: 0
@@ -1124,10 +1122,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02ed575f0728a3e4a9e7eb3883546698, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentPawn: {fileID: 1843243177121843863, guid: 5d0148baf0b729846add5a17fcfcbd13,
-    type: 3}
-  otherPawn: {fileID: 4223033010141506408, guid: 9684def4d387bef4192cb3ec4c79a046,
-    type: 3}
 --- !u!114 &656880752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1520,12 +1514,16 @@ MonoBehaviour:
   gameRuleInfoText: {fileID: 2116770379}
   showTurnButton: {fileID: 1769511414}
   scanCardButton: {fileID: 1373067192}
-  gameManager: {fileID: 374703342}
+  gameLogic: {fileID: 374703342}
   imageTracker: {fileID: 518792161}
   detectedCardText: {fileID: 1723631186}
   optionPanel: {fileID: 1242364352}
   option1Button: {fileID: 2124911048}
   option2Button: {fileID: 748986243}
+  tileLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  highlightMaterial: {fileID: 2100000, guid: 7edadb915a048d943b500d7f75aff8d6, type: 2}
 --- !u!1 &1242364352
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,7 +16,7 @@ namespace Logic
         [SerializeField] private GameObject boardPrefab;
         [SerializeField] private Renderer boardRenderer;
         private Renderer pawnRenderer;
-        private List<Pawn> pawns = new();
+        public List<Pawn> pawns = new List<Pawn>();
         private Pawn selectedPawn;
         private BoardLogic boardLogic;
 
@@ -62,11 +62,19 @@ namespace Logic
 
         public void TogglePawnVisibility(bool isVisible)
         {
-            foreach (var pawn in pawns)
+            for (int i = 0; i < pawns.Count; i++)
             {
-                pawn.GetComponentInChildren<Renderer>().enabled = isVisible;
+                if (pawns[i] != null)
+                {
+                    Renderer[] renderers = pawns[i].GetComponentsInChildren<Renderer>();
+                    foreach (Renderer renderer in renderers)
+                    {
+                        renderer.enabled = isVisible;
+                    }
+                }
             }
         }
+        
     
         //TODO: Create a bool method that returns whether a pawn is able to move or not 17.10.23
         
