@@ -1,5 +1,5 @@
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using Enums;
 using Models;
 using UI;
@@ -15,7 +15,7 @@ namespace Logic
         [SerializeField] private GameObject greenPawnPrefab;
         [SerializeField] private GameObject boardPrefab;
         [SerializeField] private Renderer boardRenderer;
-        private Renderer pawnRenderer;
+        private Renderer pawnRenderer; //Is this needed? - Aldís 23.10.23
         private List<Pawn> pawns = new();
         private Pawn selectedPawn;
         private BoardLogic boardLogic;
@@ -34,7 +34,16 @@ namespace Logic
 
         public BoardPosition PlayCard(Pawn chosenPawn, CardActionEnum cardAction)
         {
-            return boardLogic.HandleCardPlayed(chosenPawn, cardAction);
+            try
+            {
+                return boardLogic.HandleCardPlayed(chosenPawn, cardAction);
+            }
+            catch (InvalidOperationException e) //This exception means that the tile already has a pawn on it
+            {
+                Console.WriteLine(e);
+                //TODO: Call a method to check the pawns' colors, move a pawn back to home base if appropriate and return the position - Aldís 23.10.23
+                return null;
+            }
         }
 
         void SpawnBoardPrefab()
@@ -72,46 +81,51 @@ namespace Logic
         
         void SpawnPawns()
         {
-            GameObject[] redTiles = GameObject.FindGameObjectsWithTag("BaseRedTile");
-            GameObject[] blueTiles = GameObject.FindGameObjectsWithTag("BaseBlueTile");
-            GameObject[] yellowTiles = GameObject.FindGameObjectsWithTag("BaseYellowTile");
-            GameObject[] greenTiles = GameObject.FindGameObjectsWithTag("BaseGreenTile");
-
-            SpawnPawnsForColor(redTiles, TeamEnum.RedOrHeart);
-            SpawnPawnsForColor(blueTiles, TeamEnum.BlueOrWater);
-            SpawnPawnsForColor(yellowTiles, TeamEnum.YellowOrStar);
-            SpawnPawnsForColor(greenTiles, TeamEnum.GreenOrEmerald);
+            SpawnPawnsForColor(TeamEnum.BlueOrWater);
+            SpawnPawnsForColor(TeamEnum.RedOrHeart);
+            SpawnPawnsForColor(TeamEnum.YellowOrStar);
+            SpawnPawnsForColor(TeamEnum.GreenOrEmerald);
         }
 
-        void SpawnPawnsForColor(GameObject[] baseTiles, TeamEnum color)
+        void SpawnPawnsForColor(TeamEnum color)
         {
-            for (var i = 0; i < 4; i++)
+            var quadrants = EnumToList<QuadrantEnum>();
+            
+            foreach (var team in EnumToList<TeamEnum>())
             {
                 var pawnPrefab = GetPawnPrefab(color);
-
-                var pawn = Instantiate(pawnPrefab, baseTiles[i].transform.position, Quaternion.identity).GetComponent<Pawn>();
-                pawn.gameLogic = this;
-                pawn.teamEnum = color;
                 
-                pawns.Add(pawn);
+                for (var i = 0; i < 4; i++)
+                {
+                    var quadrant = quadrants[(int) team];
+                    var position = new BoardPosition(quadrant, TileNumberEnum.HomeBase, boardLogic.GetTileVectorPosition(quadrants[(int) team], TileNumberEnum.HomeBase));
+                    var vector = boardLogic.GetTileVectorPosition(quadrant, TileNumberEnum.Heart);
+                    var pawn = Instantiate(pawnPrefab, vector, Quaternion.identity).GetComponent<Pawn>();
+                    
+                    pawn.gameLogic = this;
+                    pawn.teamEnum = color;
+                    pawn.boardPosition = position;
+                
+                    pawns.Add(pawn);
+                }
             }
         }
         
-        GameObject GetPawnPrefab(TeamEnum color)
+        private GameObject GetPawnPrefab(TeamEnum color)
         {
-            switch (color)
+            return color switch
             {
-                case TeamEnum.RedOrHeart:
-                    return redPawnPrefab;
-                case TeamEnum.BlueOrWater:
-                    return bluePawnPrefab;
-                case TeamEnum.YellowOrStar:
-                    return yellowPawnPrefab;
-                case TeamEnum.GreenOrEmerald:
-                    return greenPawnPrefab;
-                default:
-                    return null;
-            }
+                TeamEnum.RedOrHeart => redPawnPrefab,
+                TeamEnum.BlueOrWater => bluePawnPrefab,
+                TeamEnum.YellowOrStar => yellowPawnPrefab,
+                TeamEnum.GreenOrEmerald => greenPawnPrefab,
+                _ => null
+            };
+        }
+
+        private List<T> EnumToList<T>()
+        {
+            return new List<T>((T[])Enum.GetValues(typeof(T)));
         }
     }
 }

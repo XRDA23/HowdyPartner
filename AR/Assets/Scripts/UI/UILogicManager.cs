@@ -269,6 +269,7 @@ namespace UI
                 }
             }
         }
+        
         public void SelectPawn(GameObject pawn)
         {
             //TODO: Get selected pawn and store it for calling the game logic
