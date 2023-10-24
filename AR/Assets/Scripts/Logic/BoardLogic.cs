@@ -89,6 +89,31 @@ namespace Logic
 
         private BoardPosition OnMoveForwardPlayed(int nrOfSteps, Pawn pawn)
         {
+            int totalSteps = (int) pawn.boardPosition.tileNo + nrOfSteps;
+            
+            if (totalSteps > 14)
+            {
+                QuadrantEnum curentQuadrant = pawn.boardPosition.quadrantEnum;
+                QuadrantEnum nextQuadrant = GetNextQuadrant(curentQuadrant);
+                
+                if (GetQuadrant(pawn.TeamEnum) == nextQuadrant)
+                {
+                    //TODO: add end base logic 
+                    pawn.boardPosition.tileNo = TileNumberEnum.Arrow;
+                }
+                else
+                {
+                    pawn.boardPosition.tileNo = GetTileNoEnumFromNumber(totalSteps - 15);
+                }
+
+                pawn.boardPosition.quadrantEnum = nextQuadrant;
+            }
+            else
+            {
+                pawn.boardPosition.tileNo = GetTileNoEnumFromNumber(totalSteps);
+            }
+            
+            
             try
             {
                 pawn.transform.position = pawn.boardPosition.vector3Position; //Plus the number of steps
@@ -103,9 +128,24 @@ namespace Logic
 
             return null;
         }
-
+        
         private BoardPosition OnMoveBackwardsPlayed(int nrOfSteps, Pawn pawn)
         {
+            int landingPosition = (int) pawn.boardPosition.tileNo - nrOfSteps;
+
+            if (landingPosition < 0)
+            {
+                QuadrantEnum curentQuadrant = pawn.boardPosition.quadrantEnum;
+                pawn.boardPosition.quadrantEnum = GetPreviousQuadrant(curentQuadrant);
+
+                int position = 15 + landingPosition;
+                pawn.boardPosition.tileNo = GetTileNoEnumFromNumber(position);
+            }
+            else
+            {
+                pawn.boardPosition.tileNo = GetTileNoEnumFromNumber(landingPosition);
+            }
+            
             try
             {
                 pawn.transform.position = pawn.boardPosition.vector3Position; //Minus the number of steps
@@ -119,6 +159,79 @@ namespace Logic
             }
 
             return null;
+        }
+
+        private QuadrantEnum GetNextQuadrant(QuadrantEnum currentQuadrant)
+        {
+            switch (currentQuadrant)
+            {
+                case 0:
+                    return QuadrantEnum.Red;
+                case 1:
+                    return QuadrantEnum.Yellow;
+                case 2:
+                    return QuadrantEnum.Green;
+                case 3:
+                    return QuadrantEnum.Blue;
+                default:
+                    return currentQuadrant;
+            }
+        }
+        
+        private QuadrantEnum GetPreviousQuadrant(QuadrantEnum currentQuadrant)
+        {
+            switch (currentQuadrant)
+            {
+                case 0:
+                    return QuadrantEnum.Green;
+                case 1:
+                    return QuadrantEnum.Blue;
+                case 2:
+                    return QuadrantEnum.Red;
+                case 3:
+                    return QuadrantEnum.Yellow;
+                default:
+                    return currentQuadrant;
+            }
+        }
+
+        private TileNumberEnum GetTileNoEnumFromNumber(int number)
+        {
+            switch (number)
+            {
+                case 0:
+                    return TileNumberEnum.Heart; 
+                case 1:
+                    return TileNumberEnum.One;
+                case 2:
+                    return TileNumberEnum.Two;
+                case 3:
+                    return TileNumberEnum.Three;
+                case 4:
+                    return TileNumberEnum.Four;
+                case 5:
+                    return TileNumberEnum.Five;
+                case 6:
+                    return TileNumberEnum.Six;
+                case 7:
+                    return TileNumberEnum.Seven;
+                case 8:
+                    return TileNumberEnum.Eight; 
+                case 9:
+                    return TileNumberEnum.Nine;
+                case 10:
+                    return TileNumberEnum.Ten;
+                case 11:
+                    return TileNumberEnum.Eleven;
+                case 12:
+                    return TileNumberEnum.Twelve;
+                case 13:
+                    return TileNumberEnum.Thirteen;
+                case 14:
+                    return TileNumberEnum.Fourteen;
+                default:
+                    return TileNumberEnum.HomeBase;
+            }
         }
 
         private QuadrantEnum GetQuadrant(TeamEnum team)
