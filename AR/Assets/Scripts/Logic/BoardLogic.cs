@@ -96,7 +96,7 @@ namespace Logic
                 QuadrantEnum curentQuadrant = pawn.boardPosition.quadrantEnum;
                 QuadrantEnum nextQuadrant = GetNextQuadrant(curentQuadrant);
                 
-                if (GetQuadrant(pawn.TeamEnum) == nextQuadrant)
+                if (GetQuadrant(pawn.teamEnum) == nextQuadrant)
                 {
                     //TODO: add end base logic 
                     pawn.boardPosition.tileNo = TileNumberEnum.Arrow;
@@ -163,7 +163,7 @@ namespace Logic
 
         private QuadrantEnum GetNextQuadrant(QuadrantEnum currentQuadrant)
         {
-            switch (currentQuadrant)
+            switch ((int) currentQuadrant)
             {
                 case 0:
                     return QuadrantEnum.Red;
@@ -180,7 +180,7 @@ namespace Logic
         
         private QuadrantEnum GetPreviousQuadrant(QuadrantEnum currentQuadrant)
         {
-            switch (currentQuadrant)
+            switch ((int)currentQuadrant)
             {
                 case 0:
                     return QuadrantEnum.Green;
