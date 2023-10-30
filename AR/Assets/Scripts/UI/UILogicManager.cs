@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Enums;
 using Logic;
 using Models;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -25,16 +27,24 @@ namespace UI
         [SerializeField] private GameObject optionPanel;
         [SerializeField] private Button option1Button;
         [SerializeField] private Button option2Button;
+        [SerializeField] private Button nextButton;
+        [SerializeField] private Button previousButton;
+        public GameObject cubePrefab;
+
         public LayerMask tileLayer;
         private Pawn selectedPawn; 
         private bool canMove = true;
-        private int currentPawnIndex = 0;
+        private int currentPawnIndex = -1;
 
 
         private List<TeamEnum> teams = new List<TeamEnum>();
         public Material highlightMaterial;
         private Material originalMaterial;
         private List<Material> originalMaterials = new List<Material>(); 
+        [SerializeField] private Button selectButton;
+        private TeamEnum currentTeamTurn;
+
+
 
         private void Start()
         {
@@ -80,6 +90,33 @@ namespace UI
             {
                 Debug.LogError("Option 2 Button is not assigned in the inspector!");
             }
+            if (nextButton != null)
+            {
+                nextButton.onClick.AddListener(OnNextButtonClicked);
+            }
+            else
+            {
+                Debug.LogError("Next Button is not assigned in the inspector!");
+            }
+
+            if (previousButton != null)
+            {
+                previousButton.onClick.AddListener(OnPreviousButtonClicked);
+            }
+            else
+            {
+                Debug.LogError("Previous Button is not assigned in the inspector!");
+            }
+            if (selectButton != null)
+            {
+                selectButton.onClick.AddListener(OnSelectButtonClicked);
+            }
+            else
+            {
+                Debug.LogError("Select Button is not assigned in the inspector!");
+            }
+
+
         }
 
         private void OnDestroy()
@@ -117,7 +154,7 @@ namespace UI
             TeamEnum startingTeamEnum = teams[Random.Range(0, teams.Count)];
             UpdateTurnIndicator(startingTeamEnum);
             
-            HandleOriginalMaterials();
+           // HandleOriginalMaterials();
             
             turnIndicatorText.gameObject.SetActive(true); // Show the turn text
             scanCardButton.gameObject.SetActive(true);
@@ -129,12 +166,11 @@ namespace UI
         
         private void HandleOriginalMaterials()
         {
-            // Clearing the list to ensure it's empty
             originalMaterials.Clear(); 
-            
+
             for (int i = 0; i < gameLogic.pawns.Count; i++)
             {
-                originalMaterials.Add(null); // a placeholder for now
+                originalMaterials.Add(gameLogic.pawns[i].GetComponent<Renderer>().material);
             }
         }
 
@@ -168,8 +204,10 @@ namespace UI
 
         private void UpdateTurnIndicator(TeamEnum teamEnum)
         {
+            currentTeamTurn = teamEnum;
             turnIndicatorText.text = $"{teamEnum} team's turn!";
         }
+
 
         private void HandleOptionSelected(string option)
         {
@@ -236,6 +274,11 @@ namespace UI
 
             // Delay by 3 seconds
             Invoke("ToggleBoardVisibilityAndPawnVisibility", 3.0f);
+            // Enable next and previous buttons
+            nextButton.gameObject.SetActive(true);
+            previousButton.gameObject.SetActive(true);
+            selectButton.GameObject().SetActive(true);
+        
         }
 
         private void ToggleBoardVisibilityAndPawnVisibility()
@@ -264,52 +307,62 @@ namespace UI
             return new List<T>((T[])Enum.GetValues(typeof(T)));
         }
    
-        public void SelectPawn(GameObject pawn)
-        {
-            Debug.Log("Select clicked");
 
-            for (int i = 0; i < gameLogic.pawns.Count; i++)
-            {
-                if (gameLogic.pawns[i].gameObject == pawn)
-                {
-                    if (selectedPawn != null)
-                    {
-                        // Restore original material for the previously selected pawn
-                        Renderer selectedRenderer = selectedPawn.GetComponent<Renderer>();
-                        selectedRenderer.material = originalMaterials[currentPawnIndex];
-                    }
-
-                    selectedPawn = gameLogic.pawns[i];
-                    Debug.Log("Selected Pawn : " + selectedPawn.gameObject);
-    
-                    Renderer renderer = selectedPawn.GetComponent<Renderer>();
-
-                    // Store the original material for the selected pawn
-                    originalMaterials[currentPawnIndex] = renderer.material;
-
-                    // Highlight the selected pawn
-                    renderer.material = highlightMaterial;
-                    return;
-                }
-            }
-        }
         
-        void Update()
+        public void OnNextButtonClicked()
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                RaycastHit hit;
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            List<Pawn> currentTeamPawns = gameLogic.pawns.Where(pawn => pawn.teamEnum == currentTeamTurn).ToList();
 
-                if (Physics.Raycast(ray, out hit))
-                {
-                    Pawn clickedPawn = hit.collider.GetComponent<Pawn>();
-                    if (clickedPawn != null)
-                    {
-                        SelectPawn(clickedPawn.gameObject);
-                    }
-                }
+            currentPawnIndex++;
+            if (currentPawnIndex >= currentTeamPawns.Count)
+            {
+                currentPawnIndex = 0;
+            }
+
+            SelectPawnByIndex(currentTeamPawns[currentPawnIndex]);
+        }
+
+        public void OnPreviousButtonClicked()
+        {
+            List<Pawn> currentTeamPawns = gameLogic.pawns.Where(pawn => pawn.teamEnum == currentTeamTurn).ToList();
+
+            currentPawnIndex--;
+            if (currentPawnIndex < 0)
+            {
+                currentPawnIndex = currentTeamPawns.Count - 1;
+            }
+
+            SelectPawnByIndex(currentTeamPawns[currentPawnIndex]);
+        }
+
+
+
+
+        private void SelectPawnByIndex(Pawn pawn)
+        {
+            selectedPawn = pawn;
+
+            Debug.Log("Selected Pawn : " + selectedPawn.gameObject);
+
+            Vector3 spawnPosition = selectedPawn.transform.position + Vector3.up * 2;
+            GameObject cube = Instantiate(cubePrefab, spawnPosition, Quaternion.identity);
+
+            Destroy(cube, 2.0f);
+        }
+
+
+
+        private void OnSelectButtonClicked()
+        {
+            if (selectedPawn != null)
+            {
+                
+                // disable the Next and Previous buttons until the next turn.
+                nextButton.interactable = false;
+                previousButton.interactable = false;
             }
         }
+
+
     }
 }
