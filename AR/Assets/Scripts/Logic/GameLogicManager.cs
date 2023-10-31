@@ -18,7 +18,7 @@ namespace Logic
         private Renderer pawnRenderer; //Is this needed? - Aldís 23.10.23
         public List<Pawn> pawns = new();
         private Pawn selectedPawn;
-        private BoardLogic boardLogic;
+        [SerializeField]   private BoardLogic boardLogic;
 
         public void StartGame()
         {
@@ -97,6 +97,7 @@ namespace Logic
 
         void SpawnPawnsForColor(TeamEnum color)
         {
+            Debug.Log("spawn pawns");
             var quadrants = EnumToList<QuadrantEnum>();
             
             foreach (var team in EnumToList<TeamEnum>())

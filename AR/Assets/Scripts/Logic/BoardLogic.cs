@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Logic
 {
-    public class BoardLogic
+    public class BoardLogic:MonoBehaviour
     {
         // we have home and end bases as many as we have players - easier scalability
         private int noOfPlayers { get; set; }
