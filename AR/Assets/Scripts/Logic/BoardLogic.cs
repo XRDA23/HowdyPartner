@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Enums;
 using Models;
 using UnityEngine;
@@ -14,8 +16,6 @@ namespace Logic
         {
             this.noOfPlayers = noOfPlayers;
         }
-
-        //What methods will the GameLogic call on this class? - need to be added
 
         public BoardPosition HandleCardPlayed(Pawn pawn, CardActionEnum cardAction)
         {
@@ -81,47 +81,210 @@ namespace Logic
 
         private void OnSwitchPlayed(Pawn[] pawns)
         {
-            (pawns[0].transform.position, pawns[1].transform.position) =
-                (pawns[1].transform.position, pawns[0].transform.position);
+            var pos0 = pawns[0].boardPosition;
+            var pos1 = pawns[1].boardPosition;
+            pawns[0].boardPosition = new BoardPosition(pos1.quadrantEnum, pos1.tileNo, GetTileVectorPosition(pos1.quadrantEnum, pos1.tileNo));
+            pawns[1].boardPosition = pos0;
         }
 
         private BoardPosition OnMoveForwardPlayed(int nrOfSteps, Pawn pawn)
         {
-            //TODO: Call board to know where to physically move the pawn - Aldís 09.10.23
-            // pawn.position = boardPosition.getTileXStepsAhead(int nrOfSteps)
-            //BIANCA do the math :) <3
+            int totalSteps = (int) pawn.boardPosition.tileNo + nrOfSteps;
+            
+            if (totalSteps > 14)
+            {
+                QuadrantEnum curentQuadrant = pawn.boardPosition.quadrantEnum;
+                QuadrantEnum nextQuadrant = GetNextQuadrant(curentQuadrant);
+                
+                if (GetQuadrant(pawn.teamEnum) == nextQuadrant)
+                {
+                    //TODO: add end base logic 
+                    pawn.boardPosition.tileNo = TileNumberEnum.Arrow;
+                }
+                else
+                {
+                    pawn.boardPosition.tileNo = GetTileNoEnumFromNumber(totalSteps - 15);
+                }
+
+                pawn.boardPosition.quadrantEnum = nextQuadrant;
+            }
+            else
+            {
+                pawn.boardPosition.tileNo = GetTileNoEnumFromNumber(totalSteps);
+            }
+            
+            
+            try
+            {
+                pawn.transform.position = pawn.boardPosition.vector3Position; //Plus the number of steps
+                //TODO: Add the number of steps to it when the math is done - Aldís 23.10.23
+                return pawn.boardPosition;
+            }
+            catch (InvalidOperationException e)
+            {
+                Console.WriteLine(e);
+                //TODO: Call a method to move a pawn back to home base - Aldís 23.10.23
+            }
+
+            return null;
+        }
+        
+        private BoardPosition OnMoveBackwardsPlayed(int nrOfSteps, Pawn pawn)
+        {
+            int landingPosition = (int) pawn.boardPosition.tileNo - nrOfSteps;
+
+            if (landingPosition < 0)
+            {
+                QuadrantEnum curentQuadrant = pawn.boardPosition.quadrantEnum;
+                pawn.boardPosition.quadrantEnum = GetPreviousQuadrant(curentQuadrant);
+
+                int position = 15 + landingPosition;
+                pawn.boardPosition.tileNo = GetTileNoEnumFromNumber(position);
+            }
+            else
+            {
+                pawn.boardPosition.tileNo = GetTileNoEnumFromNumber(landingPosition);
+            }
+            
+            try
+            {
+                pawn.transform.position = pawn.boardPosition.vector3Position; //Minus the number of steps
+                //TODO: Subtract the number of steps to it when the math is done - Aldís 23.10.23
+                return pawn.boardPosition;
+            }
+            catch (InvalidOperationException e) //This exception means that the tile already has a pawn on it
+            {
+                Console.WriteLine(e);
+                //TODO: Call a method to move a pawn back to home base - Aldís 23.10.23
+            }
+
             return null;
         }
 
-        private BoardPosition OnMoveBackwardsPlayed(int nrOfSteps, Pawn pawn)
+        private QuadrantEnum GetNextQuadrant(QuadrantEnum currentQuadrant)
         {
-            //TODO: Call board position attribute of pawn to know where to physically move the pawn - Aldís 09.10.23
-            // pawn.position = boardPosition.getTileXStepsBack(int nrOfSteps)
-            return null;
+            switch ((int) currentQuadrant)
+            {
+                case 0:
+                    return QuadrantEnum.Red;
+                case 1:
+                    return QuadrantEnum.Yellow;
+                case 2:
+                    return QuadrantEnum.Green;
+                case 3:
+                    return QuadrantEnum.Blue;
+                default:
+                    return currentQuadrant;
+            }
+        }
+        
+        private QuadrantEnum GetPreviousQuadrant(QuadrantEnum currentQuadrant)
+        {
+            switch ((int)currentQuadrant)
+            {
+                case 0:
+                    return QuadrantEnum.Green;
+                case 1:
+                    return QuadrantEnum.Blue;
+                case 2:
+                    return QuadrantEnum.Red;
+                case 3:
+                    return QuadrantEnum.Yellow;
+                default:
+                    return currentQuadrant;
+            }
+        }
+
+        private TileNumberEnum GetTileNoEnumFromNumber(int number)
+        {
+            switch (number)
+            {
+                case 0:
+                    return TileNumberEnum.Heart; 
+                case 1:
+                    return TileNumberEnum.One;
+                case 2:
+                    return TileNumberEnum.Two;
+                case 3:
+                    return TileNumberEnum.Three;
+                case 4:
+                    return TileNumberEnum.Four;
+                case 5:
+                    return TileNumberEnum.Five;
+                case 6:
+                    return TileNumberEnum.Six;
+                case 7:
+                    return TileNumberEnum.Seven;
+                case 8:
+                    return TileNumberEnum.Eight; 
+                case 9:
+                    return TileNumberEnum.Nine;
+                case 10:
+                    return TileNumberEnum.Ten;
+                case 11:
+                    return TileNumberEnum.Eleven;
+                case 12:
+                    return TileNumberEnum.Twelve;
+                case 13:
+                    return TileNumberEnum.Thirteen;
+                case 14:
+                    return TileNumberEnum.Fourteen;
+                default:
+                    return TileNumberEnum.HomeBase;
+            }
         }
 
         private QuadrantEnum GetQuadrant(TeamEnum team)
         {
-            switch (team)
-            {
-                case TeamEnum.BlueOrWater:
-                    return QuadrantEnum.Blue;
-                case TeamEnum.RedOrHeart:
-                    return QuadrantEnum.Red;
-                case TeamEnum.YellowOrStar:
-                    return QuadrantEnum.Yellow;
-                case TeamEnum.GreenOrEmerald:
-                    return QuadrantEnum.Green;
-                default:
-                    return QuadrantEnum.Blue;
-            }
+            var quadrants = EnumToList<QuadrantEnum>();
+            return quadrants[(int) team];
         }
 
         private BoardPosition GetPawnFromHome(Pawn pawn)
         {
-            pawn.position.quadrantEnum = GetQuadrant(pawn.teamEnum);
-            pawn.position.tileNo = TileNumberEnum.Heart;
-            return pawn.position;
+            var quadrant = GetQuadrant(pawn.teamEnum);
+            pawn.boardPosition = new BoardPosition(quadrant, TileNumberEnum.Heart, GetTileVectorPosition(quadrant, TileNumberEnum.Heart));
+            return pawn.boardPosition;
+        }
+
+        /// <summary>
+        /// Gets the first Vector3 position of a GameObject tagged with the argument strings that does not already have a pawn on it.
+        /// </summary>
+        /// <param name="quadrant"></param>
+        /// <param name="tileNo"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException">Thrown if no GameObject was found with the given strings in their tag</exception>
+        /// <exception cref="InvalidOperationException">Thrown if there is already a pawn on the tile</exception>
+        public Vector3 GetTileVectorPosition(QuadrantEnum quadrant, TileNumberEnum tileNo)
+        {
+            try
+            {
+                var tiles = GameObject.FindGameObjectsWithTag($"{quadrant}{tileNo}");
+                foreach (var tile in tiles)
+                {
+                    if (IsTileFree(tile))
+                    {
+                        return tile.transform.position;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw new ArgumentException($"No tile found with '{quadrant}{tileNo}' tag.", e);
+            }
+            
+            throw new InvalidOperationException($"Tile with '{quadrant}{tileNo}' tag is occupied.");
+        }
+
+        private bool IsTileFree(GameObject tile)
+        {
+            return tile.GetComponent<Pawn>() == null;
+        }
+                
+        private List<T> EnumToList<T>()
+        {
+            return new List<T>((T[])Enum.GetValues(typeof(T)));
         }
     }
 }

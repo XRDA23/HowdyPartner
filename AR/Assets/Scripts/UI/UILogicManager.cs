@@ -36,15 +36,12 @@ namespace UI
         private bool canMove = true;
         private int currentPawnIndex = -1;
 
-
         private List<TeamEnum> teams = new List<TeamEnum>();
         public Material highlightMaterial;
         private Material originalMaterial;
         private List<Material> originalMaterials = new List<Material>(); 
         [SerializeField] private Button selectButton;
         private TeamEnum currentTeamTurn;
-
-
 
         private void Start()
         {
@@ -335,9 +332,6 @@ namespace UI
             SelectPawnByIndex(currentTeamPawns[currentPawnIndex]);
         }
 
-
-
-
         private void SelectPawnByIndex(Pawn pawn)
         {
             selectedPawn = pawn;
@@ -350,8 +344,6 @@ namespace UI
             Destroy(cube, 2.0f);
         }
 
-
-
         private void OnSelectButtonClicked()
         {
             if (selectedPawn != null)
@@ -362,7 +354,19 @@ namespace UI
                 previousButton.interactable = false;
             }
         }
-
-
+        
+        public void SelectPawn(GameObject pawn)
+        {
+            //TODO: Get selected pawn and store it for calling the game logic
+            // for (int i = 0; i < pawns.Length; i++)
+            // {
+            //     if (pawns[i] == pawn)
+            //     {
+            //         currentPawnIndex = i;
+            //         Debug.Log("Current Pawn : " + pawn); // Debug
+            //         return;
+            //     }
+            // }
+        }
     }
 }
