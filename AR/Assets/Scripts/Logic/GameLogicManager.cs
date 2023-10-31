@@ -99,24 +99,21 @@ namespace Logic
         {
             Debug.Log("spawn pawns");
             var quadrants = EnumToList<QuadrantEnum>();
-            
-            foreach (var team in EnumToList<TeamEnum>())
+
+            var pawnPrefab = GetPawnPrefab(color);
+
+            for (var i = 0; i < 4; i++)
             {
-                var pawnPrefab = GetPawnPrefab(color);
-                
-                for (var i = 0; i < 4; i++)
-                {
-                    var quadrant = quadrants[(int) team];
-                    var position = new BoardPosition(quadrant, TileNumberEnum.HomeBase, boardLogic.GetTileVectorPosition(quadrants[(int) team], TileNumberEnum.HomeBase));
-                    var vector = boardLogic.GetTileVectorPosition(quadrant, TileNumberEnum.Heart);
-                    var pawn = Instantiate(pawnPrefab, vector, Quaternion.identity).GetComponent<Pawn>();
-                    
-                    pawn.gameLogic = this;
-                    pawn.teamEnum = color;
-                    pawn.boardPosition = position;
-                
-                    pawns.Add(pawn);
-                }
+                var quadrant = quadrants[i];
+                var position = new BoardPosition(quadrant, TileNumberEnum.HomeBase, boardLogic.GetTileVectorPosition(quadrant, TileNumberEnum.HomeBase));
+                var vector = boardLogic.GetTileVectorPosition(quadrant, TileNumberEnum.Heart);
+                var pawn = Instantiate(pawnPrefab, vector, Quaternion.identity).GetComponent<Pawn>();
+
+                pawn.gameLogic = this;
+                pawn.teamEnum = color;
+                pawn.boardPosition = position;
+
+                pawns.Add(pawn);
             }
         }
         
