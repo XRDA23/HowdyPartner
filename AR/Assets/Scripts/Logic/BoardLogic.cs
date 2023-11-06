@@ -262,9 +262,31 @@ namespace Logic
                 var tiles = GameObject.FindGameObjectsWithTag($"{quadrant}{tileNo}");
                 foreach (var tile in tiles)
                 {
+                    Debug.Log($"Tile found for {quadrant}{tileNo}. Position: {tile.transform.position}");
+                    return tile.transform.position;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw new ArgumentException($"No tile found with '{quadrant}{tileNo}' tag.", e);
+            }
+
+            throw new InvalidOperationException($"Tile with '{quadrant}{tileNo}' tag is occupied.");
+        }
+
+        public List<Vector3> GetAvailableTilePositions(QuadrantEnum quadrant, TileNumberEnum tileNo)
+        {
+            List<Vector3> availablePositions = new List<Vector3>();
+            try
+            {
+                var tiles = GameObject.FindGameObjectsWithTag($"{quadrant}{tileNo}");
+                foreach (var tile in tiles)
+                {
                     if (IsTileFree(tile))
                     {
-                        return tile.transform.position;
+                        Debug.Log($"Tile found for {quadrant}{tileNo}. Position: {tile.transform.position}");
+                        availablePositions.Add(tile.transform.position);
                     }
                 }
             }
@@ -273,8 +295,8 @@ namespace Logic
                 Console.WriteLine(e);
                 throw new ArgumentException($"No tile found with '{quadrant}{tileNo}' tag.", e);
             }
-            
-            throw new InvalidOperationException($"Tile with '{quadrant}{tileNo}' tag is occupied.");
+
+            return availablePositions;
         }
 
         private bool IsTileFree(GameObject tile)

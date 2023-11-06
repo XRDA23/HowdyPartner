@@ -98,16 +98,23 @@ namespace Logic
         void SpawnPawnsForColor(TeamEnum color)
         {
             Debug.Log("spawn pawns");
-            var quadrants = EnumToList<QuadrantEnum>();
 
             var pawnPrefab = GetPawnPrefab(color);
 
+            var availablePositions = boardLogic.GetAvailableTilePositions(color.ToQuadrant(), TileNumberEnum.HomeBase);
+
+            if (availablePositions.Count < 4)
+            {
+                Debug.LogError("Not enough available tiles for spawning pawns.");
+                return;
+            }
+
             for (var i = 0; i < 4; i++)
             {
-                var quadrant = quadrants[i];
-                var position = new BoardPosition(quadrant, TileNumberEnum.HomeBase, boardLogic.GetTileVectorPosition(quadrant, TileNumberEnum.HomeBase));
-                var vector = boardLogic.GetTileVectorPosition(quadrant, TileNumberEnum.Heart);
-                var pawn = Instantiate(pawnPrefab, vector, Quaternion.identity).GetComponent<Pawn>();
+                var position = new BoardPosition(color.ToQuadrant(), TileNumberEnum.HomeBase, availablePositions[i]);
+
+                var pawn = Instantiate(pawnPrefab, position.vector3Position, Quaternion.identity).GetComponent<Pawn>();
+                Debug.Log($"Pawn spawned at position: {pawn.transform.position}");
 
                 pawn.gameLogic = this;
                 pawn.teamEnum = color;
@@ -116,6 +123,7 @@ namespace Logic
                 pawns.Add(pawn);
             }
         }
+        
         
         private GameObject GetPawnPrefab(TeamEnum color)
         {

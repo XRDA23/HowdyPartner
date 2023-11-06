@@ -147,8 +147,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf30ae0361522914aab8288eb946a4f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pawnColor: 2
-  gameManager: {fileID: 0}
+  teamEnum: 0
+  gameLogic: {fileID: 0}
 --- !u!1001 &7193709082901119056
 PrefabInstance:
   m_ObjectHideFlags: 0
