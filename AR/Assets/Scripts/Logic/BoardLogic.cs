@@ -11,10 +11,29 @@ namespace Logic
     {
         // we have home and end bases as many as we have players - easier scalability
         private int noOfPlayers { get; set; }
+        private readonly Dictionary<int, TileNumberEnum> tileNumberDictionary;
 
         public BoardLogic(int noOfPlayers)
         {
             this.noOfPlayers = noOfPlayers;
+            tileNumberDictionary = new Dictionary<int, TileNumberEnum>
+            {
+                {0, TileNumberEnum.Heart},
+                {1, TileNumberEnum.One},
+                {2, TileNumberEnum.Two},
+                {3, TileNumberEnum.Three},
+                {4, TileNumberEnum.Four},
+                {5, TileNumberEnum.Five},
+                {6, TileNumberEnum.Six},
+                {7, TileNumberEnum.Seven},
+                {8, TileNumberEnum.Eight},
+                {9, TileNumberEnum.Nine},
+                {10, TileNumberEnum.Ten},
+                {11, TileNumberEnum.Eleven},
+                {12, TileNumberEnum.Twelve},
+                {13, TileNumberEnum.Thirteen},
+                {14, TileNumberEnum.Fourteen}
+            };
         }
 
         public BoardPosition HandleCardPlayed(Pawn pawn, CardActionEnum cardAction)
@@ -89,35 +108,9 @@ namespace Logic
 
         private BoardPosition OnMoveForwardPlayed(int nrOfSteps, Pawn pawn)
         {
-            int totalSteps = (int) pawn.boardPosition.tileNo + nrOfSteps;
-            
-            if (totalSteps > 14)
-            {
-                QuadrantEnum curentQuadrant = pawn.boardPosition.quadrantEnum;
-                QuadrantEnum nextQuadrant = GetNextQuadrant(curentQuadrant);
-                
-                if (GetQuadrant(pawn.teamEnum) == nextQuadrant)
-                {
-                    //TODO: add end base logic 
-                    pawn.boardPosition.tileNo = TileNumberEnum.Arrow;
-                }
-                else
-                {
-                    pawn.boardPosition.tileNo = GetTileNoEnumFromNumber(totalSteps - 15);
-                }
-
-                pawn.boardPosition.quadrantEnum = nextQuadrant;
-            }
-            else
-            {
-                pawn.boardPosition.tileNo = GetTileNoEnumFromNumber(totalSteps);
-            }
-            
-            
             try
             {
-                pawn.transform.position = pawn.boardPosition.vector3Position; //Plus the number of steps
-                //TODO: Add the number of steps to it when the math is done - Aldís 23.10.23
+                pawn.boardPosition = GetNewBoardPositionForward(nrOfSteps, pawn);
                 return pawn.boardPosition;
             }
             catch (InvalidOperationException e)
@@ -125,31 +118,38 @@ namespace Logic
                 Console.WriteLine(e);
                 //TODO: Call a method to move a pawn back to home base - Aldís 23.10.23
             }
-
+            
             return null;
         }
-        
-        private BoardPosition OnMoveBackwardsPlayed(int nrOfSteps, Pawn pawn)
+
+        private BoardPosition GetNewBoardPositionForward(int nrOfSteps, Pawn pawn)
         {
-            int landingPosition = (int) pawn.boardPosition.tileNo - nrOfSteps;
+            var quadrant = pawn.boardPosition.quadrantEnum;
+            TileNumberEnum tileNumber;
+            var totalSteps = pawn.boardPosition.tileNo.GetTileNumberInt() + nrOfSteps;
 
-            if (landingPosition < 0)
+            if (totalSteps > 14)
             {
-                QuadrantEnum curentQuadrant = pawn.boardPosition.quadrantEnum;
-                pawn.boardPosition.quadrantEnum = GetPreviousQuadrant(curentQuadrant);
+                var nextQuadrant= quadrant.GetNextQuadrant();
 
-                int position = 15 + landingPosition;
-                pawn.boardPosition.tileNo = GetTileNoEnumFromNumber(position);
+                // Move it to the arrow tile if the pawn is finishing it's circuit of the board or move it to the heart tile of the next quadrant on the board
+                tileNumber = pawn.teamEnum.ToQuadrant() == nextQuadrant ? TileNumberEnum.Arrow : tileNumberDictionary[totalSteps - 15];
+
+                quadrant = nextQuadrant;
             }
             else
             {
-                pawn.boardPosition.tileNo = GetTileNoEnumFromNumber(landingPosition);
+                tileNumber = tileNumberDictionary[totalSteps];
             }
             
+            return new BoardPosition(quadrant, tileNumber, GetTileVectorPosition(quadrant, tileNumber));
+        }
+
+        private BoardPosition OnMoveBackwardsPlayed(int nrOfSteps, Pawn pawn)
+        {
             try
             {
-                pawn.transform.position = pawn.boardPosition.vector3Position; //Minus the number of steps
-                //TODO: Subtract the number of steps to it when the math is done - Aldís 23.10.23
+                pawn.boardPosition = GetNewBoardPositionBackwards(nrOfSteps, pawn);
                 return pawn.boardPosition;
             }
             catch (InvalidOperationException e) //This exception means that the tile already has a pawn on it
@@ -161,88 +161,29 @@ namespace Logic
             return null;
         }
 
-        private QuadrantEnum GetNextQuadrant(QuadrantEnum currentQuadrant)
+        private BoardPosition GetNewBoardPositionBackwards(int nrOfSteps, Pawn pawn)
         {
-            switch ((int) currentQuadrant)
-            {
-                case 0:
-                    return QuadrantEnum.Red;
-                case 1:
-                    return QuadrantEnum.Yellow;
-                case 2:
-                    return QuadrantEnum.Green;
-                case 3:
-                    return QuadrantEnum.Blue;
-                default:
-                    return currentQuadrant;
-            }
-        }
-        
-        private QuadrantEnum GetPreviousQuadrant(QuadrantEnum currentQuadrant)
-        {
-            switch ((int)currentQuadrant)
-            {
-                case 0:
-                    return QuadrantEnum.Green;
-                case 1:
-                    return QuadrantEnum.Blue;
-                case 2:
-                    return QuadrantEnum.Red;
-                case 3:
-                    return QuadrantEnum.Yellow;
-                default:
-                    return currentQuadrant;
-            }
-        }
+            var quadrant = pawn.boardPosition.quadrantEnum;
+            TileNumberEnum tileNumber;
+            var landingPosition = pawn.boardPosition.tileNo.GetTileNumberInt() - nrOfSteps;
 
-        private TileNumberEnum GetTileNoEnumFromNumber(int number)
-        {
-            switch (number)
+            if (landingPosition < 0)
             {
-                case 0:
-                    return TileNumberEnum.Heart; 
-                case 1:
-                    return TileNumberEnum.One;
-                case 2:
-                    return TileNumberEnum.Two;
-                case 3:
-                    return TileNumberEnum.Three;
-                case 4:
-                    return TileNumberEnum.Four;
-                case 5:
-                    return TileNumberEnum.Five;
-                case 6:
-                    return TileNumberEnum.Six;
-                case 7:
-                    return TileNumberEnum.Seven;
-                case 8:
-                    return TileNumberEnum.Eight; 
-                case 9:
-                    return TileNumberEnum.Nine;
-                case 10:
-                    return TileNumberEnum.Ten;
-                case 11:
-                    return TileNumberEnum.Eleven;
-                case 12:
-                    return TileNumberEnum.Twelve;
-                case 13:
-                    return TileNumberEnum.Thirteen;
-                case 14:
-                    return TileNumberEnum.Fourteen;
-                default:
-                    return TileNumberEnum.HomeBase;
-            }
-        }
+                quadrant = quadrant.GetPreviousQuadrant();
 
-        private QuadrantEnum GetQuadrant(TeamEnum team)
-        {
-            var quadrants = EnumToList<QuadrantEnum>();
-            return quadrants[(int) team];
+                tileNumber = tileNumberDictionary[landingPosition + 15];
+            }
+            else
+            {
+                tileNumber = tileNumberDictionary[landingPosition];
+            }
+
+            return new BoardPosition(quadrant, tileNumber, GetTileVectorPosition(quadrant, tileNumber));
         }
 
         private BoardPosition GetPawnFromHome(Pawn pawn)
         {
-            var quadrant = GetQuadrant(pawn.teamEnum);
+            var quadrant = pawn.teamEnum.ToQuadrant();
             pawn.boardPosition = new BoardPosition(quadrant, TileNumberEnum.Heart, GetTileVectorPosition(quadrant, TileNumberEnum.Heart));
             return pawn.boardPosition;
         }
@@ -255,15 +196,16 @@ namespace Logic
         /// <returns></returns>
         /// <exception cref="ArgumentException">Thrown if no GameObject was found with the given strings in their tag</exception>
         /// <exception cref="InvalidOperationException">Thrown if there is already a pawn on the tile</exception>
-        public Vector3 GetTileVectorPosition(QuadrantEnum quadrant, TileNumberEnum tileNo)
+        private Vector3 GetTileVectorPosition(QuadrantEnum quadrant, TileNumberEnum tileNo)
         {
             try
             {
                 var tiles = GameObject.FindGameObjectsWithTag($"{quadrant}{tileNo}");
                 foreach (var tile in tiles)
                 {
-                    Debug.Log($"Tile found for {quadrant}{tileNo}. Position: {tile.transform.position}");
-                    return tile.transform.position;
+                    var position = tile.transform.position;
+                    Debug.Log($"Tile found for {quadrant}{tileNo}. Position: {position}");
+                    return position;
                 }
             }
             catch (Exception e)
@@ -277,7 +219,7 @@ namespace Logic
 
         public List<Vector3> GetAvailableTilePositions(QuadrantEnum quadrant, TileNumberEnum tileNo)
         {
-            List<Vector3> availablePositions = new List<Vector3>();
+            var availablePositions = new List<Vector3>();
             try
             {
                 var tiles = GameObject.FindGameObjectsWithTag($"{quadrant}{tileNo}");
@@ -302,11 +244,6 @@ namespace Logic
         private bool IsTileFree(GameObject tile)
         {
             return tile.GetComponent<Pawn>() == null;
-        }
-                
-        private List<T> EnumToList<T>()
-        {
-            return new List<T>((T[])Enum.GetValues(typeof(T)));
         }
     }
 }

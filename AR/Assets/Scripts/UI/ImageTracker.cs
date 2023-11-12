@@ -49,7 +49,7 @@ namespace UI
             foreach (var newImg in eventArgs.added)
             {
                 Console.WriteLine($"{newImg.referenceImage.name} card has been detected");
-                if (stringToCardTypeDictionary.TryGetValue(newImg.referenceImage.name, out CardTypeEnum cardType))
+                if (stringToCardTypeDictionary.TryGetValue(newImg.referenceImage.name, out var cardType))
                 {
                     OnCardScanned?.Invoke(cardType);
                 }

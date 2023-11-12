@@ -36,12 +36,16 @@ namespace UI
         private bool canMove = true;
         private int currentPawnIndex = -1;
 
-        private List<TeamEnum> teams = new List<TeamEnum>();
+        private List<TeamEnum> teams = new ();
         public Material highlightMaterial;
         private Material originalMaterial;
-        private List<Material> originalMaterials = new List<Material>(); 
+        private List<Material> originalMaterials = new (); 
         [SerializeField] private Button selectButton;
         private TeamEnum currentTeamTurn;
+        private CardActionEnum selectedAction;
+        private Dictionary<CardTypeEnum, CardActionEnum> cardAction;
+        private List<Pawn> currentTeamPawns;
+        private GameObject selectionCube;
 
         private void Start()
         {
@@ -113,7 +117,20 @@ namespace UI
                 Debug.LogError("Select Button is not assigned in the inspector!");
             }
 
-
+            cardAction = new Dictionary<CardTypeEnum, CardActionEnum>()
+            {
+                {CardTypeEnum.Switch, CardActionEnum.Switch},
+                {CardTypeEnum.Two, CardActionEnum.Two},
+                {CardTypeEnum.Three, CardActionEnum.Three},
+                {CardTypeEnum.FourBackwards, CardActionEnum.FourBackwards},
+                {CardTypeEnum.Five, CardActionEnum.Five},
+                {CardTypeEnum.Six, CardActionEnum.Six},
+                {CardTypeEnum.Nine, CardActionEnum.Nine},
+                {CardTypeEnum.Ten, CardActionEnum.Ten},
+                {CardTypeEnum.Heart, CardActionEnum.Heart},
+                {CardTypeEnum.Twelve, CardActionEnum.Twelve},
+                {CardTypeEnum.SevenTimesOne, CardActionEnum.SevenTimesOne}
+            };
         }
 
         private void OnDestroy()
@@ -143,17 +160,17 @@ namespace UI
             {
                 Debug.LogError("Show Turn Button is not assigned in the inspector!");
             }
+            
+            // Randomly decide whose turn it is and display the turn indicator
+            currentTeamTurn = teams[Random.Range(0, teams.Count)];
+            currentTeamPawns = gameLogic.pawns.Where(pawn => pawn.teamEnum == currentTeamTurn).ToList();
         }
-
+        
         private void OnShowTurnButtonClicked()
         {
-            // Randomly decide whose turn it is and display the turn indicator
-            TeamEnum startingTeamEnum = teams[Random.Range(0, teams.Count)];
-            UpdateTurnIndicator(startingTeamEnum);
-            
            // HandleOriginalMaterials();
             
-            turnIndicatorText.gameObject.SetActive(true); // Show the turn text
+            UpdateTurnIndicator();
             scanCardButton.gameObject.SetActive(true);
 
             // Hide the "Show turn" button and game rule info after revealing the turn
@@ -171,45 +188,63 @@ namespace UI
             }
         }
 
-        public void OnScanButtonClicked()
+        private void OnScanButtonClicked()
         {
-            // For now, hide the elements.
-            Debug.Log("Scan card Button was clicked!");
-        
-            if (gameLogic != null)
+            if (selectionCube != null)
             {
-                // Hide board
-                gameLogic.ToggleBoardVisibility();
-                // Hide pawns
-                gameLogic.TogglePawnVisibility(false); 
+                Destroy(selectionCube);
             }
+
+            imageTracker.OnCardScanned += HandleCardScanned;
+            
+            // Hide board
+            gameLogic.ToggleBoardVisibility(false);
+            // Hide pawns
+            gameLogic.TogglePawnVisibility(false);
 
             scanCardButton.gameObject.SetActive(false);
             turnIndicatorText.gameObject.SetActive(false);
-
-            if (imageTracker != null)
-            {
-                imageTracker.OnCardScanned += HandleCardScanned;
-            }
-            else
-            {
-                Debug.LogError("Image Tracker is not assigned in the inspector!");
-            }
-
-            Debug.Log("Started scanning for a card...");
         }
 
-        private void UpdateTurnIndicator(TeamEnum teamEnum)
+        private void UpdateTurnIndicator()
         {
-            currentTeamTurn = teamEnum;
-            turnIndicatorText.text = $"{teamEnum} team's turn!";
+            turnIndicatorText.text = $"{currentTeamTurn} team's turn!";
+            turnIndicatorText.gameObject.SetActive(true);
         }
 
+        private void NextTurn()
+        {
+            if (selectionCube != null)
+            {
+                Destroy(selectionCube);
+            }
+            
+            HidePawnSelectionUI();
 
-        private void HandleOptionSelected(string option)
+            //Clearing stored variables for last player
+            currentTeamTurn = currentTeamTurn.GetNextTeam();
+            currentTeamPawns = gameLogic.pawns.Where(pawn => pawn.teamEnum == currentTeamTurn).ToList();
+            selectedPawn = currentTeamPawns.First();
+
+            //Showing whose turn it is & scan card button
+            UpdateTurnIndicator();
+            scanCardButton.gameObject.SetActive(true);
+            ShowBoardAndPawns();
+        }
+
+        private void HidePawnSelectionUI()
+        {
+            detectedCardText.gameObject.SetActive(false);
+            nextButton.gameObject.SetActive(false);
+            previousButton.gameObject.SetActive(false);
+            selectButton.GameObject().SetActive(false);
+        }
+
+        private void HandleOptionSelected(CardActionEnum option)
         {
             Debug.Log("Option selected: " + option);
             optionPanel.SetActive(false);
+            selectedAction = option;
         }
 
         private void SetupOptionPanelForCard(CardTypeEnum cardType)
@@ -222,26 +257,26 @@ namespace UI
             {
                 case CardTypeEnum.OneOrFourteen:
                     option1Button.GetComponentInChildren<TextMeshProUGUI>().text = "One";
-                    option1Button.onClick.AddListener(() => HandleOptionSelected("One"));
+                    option1Button.onClick.AddListener(() => HandleOptionSelected(CardActionEnum.One));
 
                     option2Button.GetComponentInChildren<TextMeshProUGUI>().text = "Fourteen";
-                    option2Button.onClick.AddListener(() => HandleOptionSelected("Fourteen"));
+                    option2Button.onClick.AddListener(() => HandleOptionSelected(CardActionEnum.Fourteen));
                     break;
 
                 case CardTypeEnum.HeartOrEight:
                     option1Button.GetComponentInChildren<TextMeshProUGUI>().text = "Heart";
-                    option1Button.onClick.AddListener(() => HandleOptionSelected("Heart"));
+                    option1Button.onClick.AddListener(() => HandleOptionSelected(CardActionEnum.Heart));
 
                     option2Button.GetComponentInChildren<TextMeshProUGUI>().text = "Eight";
-                    option2Button.onClick.AddListener(() => HandleOptionSelected("Eight"));
+                    option2Button.onClick.AddListener(() => HandleOptionSelected(CardActionEnum.Eight));
                     break;
 
                 case CardTypeEnum.HeartOrThirteen:
                     option1Button.GetComponentInChildren<TextMeshProUGUI>().text = "Heart";
-                    option1Button.onClick.AddListener(() => HandleOptionSelected("Heart"));
+                    option1Button.onClick.AddListener(() => HandleOptionSelected(CardActionEnum.Heart));
 
                     option2Button.GetComponentInChildren<TextMeshProUGUI>().text = "Thirteen";
-                    option2Button.onClick.AddListener(() => HandleOptionSelected("Thirteen"));
+                    option2Button.onClick.AddListener(() => HandleOptionSelected(CardActionEnum.Thirteen));
                     break;
             }
 
@@ -253,10 +288,13 @@ namespace UI
             Debug.Log("HandleCardScanned method entered.");
             Debug.Log("Card scanned: " + cardType);
 
-            if (cardType == CardTypeEnum.OneOrFourteen || cardType == CardTypeEnum.HeartOrEight ||
-                cardType == CardTypeEnum.HeartOrThirteen)
+            if (cardType is CardTypeEnum.OneOrFourteen or CardTypeEnum.HeartOrEight or CardTypeEnum.HeartOrThirteen)
             {
                 SetupOptionPanelForCard(cardType);
+            }
+            else
+            {
+                selectedAction = cardAction[cardType];
             }
 
             if (detectedCardText != null)
@@ -270,19 +308,21 @@ namespace UI
             } 
 
             // Delay by 3 seconds
-            Invoke("ToggleBoardVisibilityAndPawnVisibility", 3.0f);
-            // Enable next and previous buttons
+            Invoke(nameof(ShowBoardAndPawns), 3.0f);
+            
+            EnableSelectionButtons();
+        }
+
+        private void EnableSelectionButtons()
+        {
             nextButton.gameObject.SetActive(true);
             previousButton.gameObject.SetActive(true);
             selectButton.GameObject().SetActive(true);
-        
         }
 
-        private void ToggleBoardVisibilityAndPawnVisibility()
+        private void ShowBoardAndPawns()
         {
-            // Show board
-            gameLogic.ToggleBoardVisibility();
-            // Show pawns
+            gameLogic.ToggleBoardVisibility(true);
             gameLogic.TogglePawnVisibility(true);
         }
     
@@ -303,13 +343,9 @@ namespace UI
         {
             return new List<T>((T[])Enum.GetValues(typeof(T)));
         }
-   
 
-        
-        public void OnNextButtonClicked()
+        private void OnNextButtonClicked()
         {
-            List<Pawn> currentTeamPawns = gameLogic.pawns.Where(pawn => pawn.teamEnum == currentTeamTurn).ToList();
-
             currentPawnIndex++;
             if (currentPawnIndex >= currentTeamPawns.Count)
             {
@@ -319,10 +355,8 @@ namespace UI
             SelectPawnByIndex(currentTeamPawns[currentPawnIndex]);
         }
 
-        public void OnPreviousButtonClicked()
+        private void OnPreviousButtonClicked()
         {
-            List<Pawn> currentTeamPawns = gameLogic.pawns.Where(pawn => pawn.teamEnum == currentTeamTurn).ToList();
-
             currentPawnIndex--;
             if (currentPawnIndex < 0)
             {
@@ -334,39 +368,35 @@ namespace UI
 
         private void SelectPawnByIndex(Pawn pawn)
         {
+            if (selectionCube != null)
+            {
+                Destroy(selectionCube);
+            }
             selectedPawn = pawn;
 
             Debug.Log("Selected Pawn : " + selectedPawn.gameObject);
 
-            Vector3 spawnPosition = selectedPawn.transform.position + Vector3.up * 2;
-            GameObject cube = Instantiate(cubePrefab, spawnPosition, Quaternion.identity);
-
-            Destroy(cube, 2.0f);
+            var spawnPosition = selectedPawn.transform.position + Vector3.up * 2;
+            selectionCube = Instantiate(cubePrefab, spawnPosition, Quaternion.identity);
         }
 
         private void OnSelectButtonClicked()
         {
-            if (selectedPawn != null)
+            try
             {
-                
-                // disable the Next and Previous buttons until the next turn.
-                nextButton.interactable = false;
-                previousButton.interactable = false;
+                if (selectedPawn != null)
+                {
+                    selectedPawn.transform.position = gameLogic.PlayCard(selectedPawn, selectedAction).vector3Position;
+                }
             }
-        }
-        
-        public void SelectPawn(GameObject pawn)
-        {
-            //TODO: Get selected pawn and store it for calling the game logic
-            // for (int i = 0; i < pawns.Length; i++)
-            // {
-            //     if (pawns[i] == pawn)
-            //     {
-            //         currentPawnIndex = i;
-            //         Debug.Log("Current Pawn : " + pawn); // Debug
-            //         return;
-            //     }
-            // }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+            }
+            finally
+            {
+                NextTurn();
+            }
         }
     }
 }

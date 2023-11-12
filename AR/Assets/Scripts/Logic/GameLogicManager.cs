@@ -61,11 +61,11 @@ namespace Logic
             boardRenderer = boardInstance.GetComponent<Renderer>();
         }
     
-        public void ToggleBoardVisibility()
+        public void ToggleBoardVisibility(bool isVisible)
         {
             if (boardRenderer != null)
             {
-                boardRenderer.enabled = !boardRenderer.enabled;
+                boardRenderer.enabled = isVisible;
             }
         }
 

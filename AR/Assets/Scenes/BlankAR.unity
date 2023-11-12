@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44402242, g: 0.49316543, b: 0.5722324, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1249,7 +1249,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SerializedLibrary: {fileID: 11400000, guid: fa86307555097f648bd0f4a424010ba6,
     type: 2}
-  m_MaxNumberOfMovingImages: 4
+  m_MaxNumberOfMovingImages: 40
   m_TrackedImagePrefab: {fileID: 0}
 --- !u!114 &518792164
 MonoBehaviour:
@@ -1280,7 +1280,6 @@ GameObject:
   - component: {fileID: 656880747}
   - component: {fileID: 656880746}
   - component: {fileID: 656880752}
-  - component: {fileID: 656880751}
   - component: {fileID: 656880750}
   - component: {fileID: 656880749}
   m_Layer: 0
@@ -1347,7 +1346,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SerializedLibrary: {fileID: 11400000, guid: fa86307555097f648bd0f4a424010ba6,
     type: 2}
-  m_MaxNumberOfMovingImages: 1
+  m_MaxNumberOfMovingImages: 40
   m_TrackedImagePrefab: {fileID: 7171449574013149460, guid: f2fc386c8f2c1604cb1fb3da642dd145,
     type: 3}
 --- !u!114 &656880750
@@ -1367,18 +1366,6 @@ MonoBehaviour:
   m_CameraFloorOffsetObject: {fileID: 0}
   m_RequestedTrackingOriginMode: 1
   m_CameraYOffset: 1.1176
---- !u!114 &656880751
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 656880745}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02ed575f0728a3e4a9e7eb3883546698, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &656880752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2877,7 +2864,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SerializedLibrary: {fileID: 0}
-  m_MaxNumberOfMovingImages: 0
+  m_MaxNumberOfMovingImages: 40
   m_TrackedImagePrefab: {fileID: 0}
 --- !u!1 &1723631184
 GameObject:
