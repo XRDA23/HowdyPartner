@@ -87,8 +87,16 @@ namespace Logic
             pawns[1].boardPosition = pos0;
         }
 
+        private bool IsInHomeBase(Pawn pawn)
+        {
+            return pawn.boardPosition.tileNo == TileNumberEnum.HomeBase;
+        }
+        
         private BoardPosition OnMoveForwardPlayed(int nrOfSteps, Pawn pawn)
         {
+            if (IsInHomeBase(pawn))
+                return pawn.boardPosition;
+            
             try
             {
                 pawn.boardPosition = GetNewBoardPositionForward(nrOfSteps, pawn);
@@ -100,7 +108,7 @@ namespace Logic
                 //TODO: Call a method to move a pawn back to home base - Aldís 23.10.23
             }
             
-            return null;
+            return pawn.boardPosition;
         }
 
         private BoardPosition GetNewBoardPositionForward(int nrOfSteps, Pawn pawn)
@@ -113,12 +121,12 @@ namespace Logic
             Debug.Log("Steps to take: "+ nrOfSteps);
             Debug.Log("Total steps: "+ totalSteps);
             Debug.Log("Total steps -15: "+ (totalSteps - 15));
+            var nextQuadrant= quadrant.GetNextQuadrant();
+            
             if (totalSteps > 14)
             {
-                var nextQuadrant= quadrant.GetNextQuadrant();
-
                 // Move it to the arrow tile if the pawn is finishing it's circuit of the board or move it to the heart tile of the next quadrant on the board
-                if (quadrant == nextQuadrant)
+                if (pawn.teamEnum.ToQuadrant() == nextQuadrant)
                 {
                     tileNumber = TileNumberEnum.Arrow;
                 }
@@ -132,7 +140,14 @@ namespace Logic
             }
             else
             {
-                tileNumber = GetEnumFromNumber(totalSteps);
+                if (pawn.teamEnum.ToQuadrant() == nextQuadrant)
+                {
+                    tileNumber = TileNumberEnum.Arrow;
+                }
+                else
+                {
+                    tileNumber = GetEnumFromNumber(totalSteps);
+                }
             }
             
             return new BoardPosition(quadrant, tileNumber, GetTileVectorPosition(quadrant, tileNumber));
@@ -196,6 +211,9 @@ namespace Logic
 
         private BoardPosition OnMoveBackwardsPlayed(int nrOfSteps, Pawn pawn)
         {
+            if (IsInHomeBase(pawn))
+                return pawn.boardPosition;
+            
             try
             {
                 pawn.boardPosition = GetNewBoardPositionBackwards(nrOfSteps, pawn);
@@ -274,25 +292,15 @@ namespace Logic
                 var tiles = GameObject.FindGameObjectsWithTag($"{quadrant}{tileNo}");
                 foreach (var tile in tiles)
                 {
-                    if (IsTileFree(tile))
-                    {
-                        Debug.Log($"Tile found for {quadrant}{tileNo}. Position: {tile.transform.position}");
-                        availablePositions.Add(tile.transform.position);
-                    }
+                    availablePositions.Add(tile.transform.position);
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw new ArgumentException($"No tile found with '{quadrant}{tileNo}' tag.", e);
+                Debug.Log($"No tile found with '{quadrant}{tileNo}' tag." + e);
             }
 
             return availablePositions;
-        }
-
-        private bool IsTileFree(GameObject tile)
-        {
-            return tile.GetComponent<Pawn>() == null;
         }
     }
 }

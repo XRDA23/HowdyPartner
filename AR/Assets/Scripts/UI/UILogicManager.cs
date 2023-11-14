@@ -219,8 +219,6 @@ namespace UI
                 Destroy(selectionCube);
             }
             
-            HidePawnSelectionUI();
-
             //Clearing stored variables for last player
             currentTeamTurn = currentTeamTurn.GetNextTeam();
             currentTeamPawns = gameLogic.pawns.Where(pawn => pawn.teamEnum == currentTeamTurn).ToList();
@@ -308,7 +306,7 @@ namespace UI
             } 
 
             // Delay by 3 seconds
-            Invoke(nameof(ShowBoardAndPawns), 3.0f);
+            Invoke(nameof(ShowBoardAndPawns), 2.0f);
             
             EnableSelectionButtons();
         }
