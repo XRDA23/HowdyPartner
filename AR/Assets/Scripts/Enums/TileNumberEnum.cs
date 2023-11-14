@@ -57,7 +57,7 @@ namespace Enums
                 TileNumberEnum.EndBase2 => 17,
                 TileNumberEnum.EndBase3 => 18,
                 TileNumberEnum.EndBase4 => 19,
-                TileNumberEnum.HomeBase => 20,
+                TileNumberEnum.HomeBase => 0,
                 _ => throw new ArgumentException("Invalid TeamEnum value")
             };
         }

@@ -11,29 +11,10 @@ namespace Logic
     {
         // we have home and end bases as many as we have players - easier scalability
         private int noOfPlayers { get; set; }
-        private readonly Dictionary<int, TileNumberEnum> tileNumberDictionary;
 
         public BoardLogic(int noOfPlayers)
         {
             this.noOfPlayers = noOfPlayers;
-            tileNumberDictionary = new Dictionary<int, TileNumberEnum>
-            {
-                {0, TileNumberEnum.Heart},
-                {1, TileNumberEnum.One},
-                {2, TileNumberEnum.Two},
-                {3, TileNumberEnum.Three},
-                {4, TileNumberEnum.Four},
-                {5, TileNumberEnum.Five},
-                {6, TileNumberEnum.Six},
-                {7, TileNumberEnum.Seven},
-                {8, TileNumberEnum.Eight},
-                {9, TileNumberEnum.Nine},
-                {10, TileNumberEnum.Ten},
-                {11, TileNumberEnum.Eleven},
-                {12, TileNumberEnum.Twelve},
-                {13, TileNumberEnum.Thirteen},
-                {14, TileNumberEnum.Fourteen}
-            };
         }
 
         public BoardPosition HandleCardPlayed(Pawn pawn, CardActionEnum cardAction)
@@ -128,21 +109,89 @@ namespace Logic
             TileNumberEnum tileNumber;
             var totalSteps = pawn.boardPosition.tileNo.GetTileNumberInt() + nrOfSteps;
 
+            Debug.Log("Current position of pawn: "+ pawn.boardPosition.tileNo.GetTileNumberInt());
+            Debug.Log("Steps to take: "+ nrOfSteps);
+            Debug.Log("Total steps: "+ totalSteps);
+            Debug.Log("Total steps -15: "+ (totalSteps - 15));
             if (totalSteps > 14)
             {
                 var nextQuadrant= quadrant.GetNextQuadrant();
 
                 // Move it to the arrow tile if the pawn is finishing it's circuit of the board or move it to the heart tile of the next quadrant on the board
-                tileNumber = pawn.teamEnum.ToQuadrant() == nextQuadrant ? TileNumberEnum.Arrow : tileNumberDictionary[totalSteps - 15];
+                if (quadrant == nextQuadrant)
+                {
+                    tileNumber = TileNumberEnum.Arrow;
+                }
+                else
+                {
+                    tileNumber = GetEnumFromNumber(totalSteps - 15);
+                }
+                // tileNumber = pawn.teamEnum.ToQuadrant() == nextQuadrant ? TileNumberEnum.Arrow : tileNumberDictionary[totalSteps - 15];
 
                 quadrant = nextQuadrant;
             }
             else
             {
-                tileNumber = tileNumberDictionary[totalSteps];
+                tileNumber = GetEnumFromNumber(totalSteps);
             }
             
             return new BoardPosition(quadrant, tileNumber, GetTileVectorPosition(quadrant, tileNumber));
+        }
+
+        private TileNumberEnum GetEnumFromNumber(int number)
+        {
+
+            switch (number)
+            {
+                case 0:
+                    Debug.Log("Til enum: "+ TileNumberEnum.Heart);
+                    return TileNumberEnum.Heart;
+                case 1:
+                    Debug.Log("Til enum: "+ TileNumberEnum.One);
+                    return TileNumberEnum.One;
+                case 2:
+                    Debug.Log("Til enum: "+ TileNumberEnum.Two);
+                    return TileNumberEnum.Two;
+                case 3:
+                    Debug.Log("Til enum: "+ TileNumberEnum.Three);
+                    return TileNumberEnum.Three;
+                case 4:
+                    Debug.Log("Til enum: "+ TileNumberEnum.Four);
+                    return TileNumberEnum.Four;
+                case 5:
+                    Debug.Log("Til enum: "+ TileNumberEnum.Five);
+                    return TileNumberEnum.Five;
+                case 6:
+                    Debug.Log("Til enum: "+ TileNumberEnum.Six);
+                    return TileNumberEnum.Six;
+                case 7:
+                    Debug.Log("Til enum: "+ TileNumberEnum.Seven);
+                    return TileNumberEnum.Seven;
+                case 8:
+                    Debug.Log("Til enum: "+ TileNumberEnum.Eight);
+                    return TileNumberEnum.Eight;
+                case 9:
+                    Debug.Log("Til enum: "+ TileNumberEnum.Nine);
+                    return TileNumberEnum.Nine;
+                case 10:
+                    Debug.Log("Til enum: "+ TileNumberEnum.Ten);
+                    return TileNumberEnum.Ten;
+                case 11:
+                    Debug.Log("Til enum: "+ TileNumberEnum.Eleven);
+                    return TileNumberEnum.Eleven;
+                case 12:
+                    Debug.Log("Til enum: "+ TileNumberEnum.Twelve);
+                    return TileNumberEnum.Twelve;
+                case 13:
+                    Debug.Log("Til enum: "+ TileNumberEnum.Thirteen);
+                    return TileNumberEnum.Thirteen;
+                case 14:
+                    Debug.Log("Til enum: "+ TileNumberEnum.Fourteen);
+                    return TileNumberEnum.Fourteen;
+                default:
+                    Debug.Log("Til enum: "+ TileNumberEnum.HomeBase);
+                    return TileNumberEnum.HomeBase;
+            }
         }
 
         private BoardPosition OnMoveBackwardsPlayed(int nrOfSteps, Pawn pawn)
@@ -171,11 +220,11 @@ namespace Logic
             {
                 quadrant = quadrant.GetPreviousQuadrant();
 
-                tileNumber = tileNumberDictionary[landingPosition + 15];
+                tileNumber = GetEnumFromNumber(landingPosition + 15);
             }
             else
             {
-                tileNumber = tileNumberDictionary[landingPosition];
+                tileNumber = GetEnumFromNumber(landingPosition);
             }
 
             return new BoardPosition(quadrant, tileNumber, GetTileVectorPosition(quadrant, tileNumber));
