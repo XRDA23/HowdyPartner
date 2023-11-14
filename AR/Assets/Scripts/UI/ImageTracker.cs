@@ -46,7 +46,7 @@ namespace UI
 
         void OnChanged(ARTrackedImagesChangedEventArgs eventArgs)
         {
-            foreach (var newImg in eventArgs.added)
+            foreach (var newImg in eventArgs.updated)
             {
                 Console.WriteLine($"{newImg.referenceImage.name} card has been detected");
                 if (stringToCardTypeDictionary.TryGetValue(newImg.referenceImage.name, out var cardType))
