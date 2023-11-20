@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Enums;
 using Logic;
+using Models;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -24,10 +27,25 @@ namespace UI
         [SerializeField] private GameObject optionPanel;
         [SerializeField] private Button option1Button;
         [SerializeField] private Button option2Button;
+        [SerializeField] private Button nextButton;
+        [SerializeField] private Button previousButton;
+        public GameObject cubePrefab;
+
         public LayerMask tileLayer;
+        private Pawn selectedPawn; 
+        private bool canMove = true;
+        private int currentPawnIndex = -1;
 
-
-        private List<TeamEnum> teams = new List<TeamEnum>();
+        private List<TeamEnum> teams = new ();
+        public Material highlightMaterial;
+        private Material originalMaterial;
+        private List<Material> originalMaterials = new (); 
+        [SerializeField] private Button selectButton;
+        private TeamEnum currentTeamTurn;
+        private CardActionEnum selectedAction;
+        private Dictionary<CardTypeEnum, CardActionEnum> cardAction;
+        private List<Pawn> currentTeamPawns;
+        private GameObject selectionCube;
 
         private void Start()
         {
@@ -37,7 +55,6 @@ namespace UI
             // Ensure only the start button and title text are shown
             gameTitleText.gameObject.SetActive(true);
             startButton.gameObject.SetActive(true);
-
             if (startButton != null)
             {
                 startButton.onClick.AddListener(OnStartButtonClicked);
@@ -46,7 +63,6 @@ namespace UI
             {
                 Debug.LogError("Start Button is not assigned in the inspector!");
             }
-
             if (scanCardButton != null)
             {
                 scanCardButton.onClick.AddListener(OnScanButtonClicked);
@@ -75,6 +91,46 @@ namespace UI
             {
                 Debug.LogError("Option 2 Button is not assigned in the inspector!");
             }
+            if (nextButton != null)
+            {
+                nextButton.onClick.AddListener(OnNextButtonClicked);
+            }
+            else
+            {
+                Debug.LogError("Next Button is not assigned in the inspector!");
+            }
+
+            if (previousButton != null)
+            {
+                previousButton.onClick.AddListener(OnPreviousButtonClicked);
+            }
+            else
+            {
+                Debug.LogError("Previous Button is not assigned in the inspector!");
+            }
+            if (selectButton != null)
+            {
+                selectButton.onClick.AddListener(OnSelectButtonClicked);
+            }
+            else
+            {
+                Debug.LogError("Select Button is not assigned in the inspector!");
+            }
+
+            cardAction = new Dictionary<CardTypeEnum, CardActionEnum>()
+            {
+                {CardTypeEnum.Switch, CardActionEnum.Switch},
+                {CardTypeEnum.Two, CardActionEnum.Two},
+                {CardTypeEnum.Three, CardActionEnum.Three},
+                {CardTypeEnum.FourBackwards, CardActionEnum.FourBackwards},
+                {CardTypeEnum.Five, CardActionEnum.Five},
+                {CardTypeEnum.Six, CardActionEnum.Six},
+                {CardTypeEnum.Nine, CardActionEnum.Nine},
+                {CardTypeEnum.Ten, CardActionEnum.Ten},
+                {CardTypeEnum.Heart, CardActionEnum.Heart},
+                {CardTypeEnum.Twelve, CardActionEnum.Twelve},
+                {CardTypeEnum.SevenTimesOne, CardActionEnum.SevenTimesOne}
+            };
         }
 
         private void OnDestroy()
@@ -104,59 +160,89 @@ namespace UI
             {
                 Debug.LogError("Show Turn Button is not assigned in the inspector!");
             }
+            
+            // Randomly decide whose turn it is and display the turn indicator
+            currentTeamTurn = teams[Random.Range(0, teams.Count)];
+            currentTeamPawns = gameLogic.pawns.Where(pawn => pawn.teamEnum == currentTeamTurn).ToList();
         }
-
+        
         private void OnShowTurnButtonClicked()
         {
-            // Randomly decide whose turn it is and display the turn indicator
-            TeamEnum startingTeamEnum = teams[Random.Range(0, teams.Count)];
-            UpdateTurnIndicator(startingTeamEnum);
-
-            turnIndicatorText.gameObject.SetActive(true); // Show the turn text
+           // HandleOriginalMaterials();
+            
+            UpdateTurnIndicator();
             scanCardButton.gameObject.SetActive(true);
 
             // Hide the "Show turn" button and game rule info after revealing the turn
             showTurnButton.gameObject.SetActive(false);
             gameRuleInfoText.gameObject.SetActive(false);
         }
-
-        public void OnScanButtonClicked()
-        {
-            // For now, hide the elements.
-            Debug.Log("Scan card Button was clicked!");
         
-            if (gameLogic != null)
+        private void HandleOriginalMaterials()
+        {
+            originalMaterials.Clear(); 
+
+            for (int i = 0; i < gameLogic.pawns.Count; i++)
             {
-                // Hide board
-                gameLogic.ToggleBoardVisibility();
-                // Hide pawns
-                gameLogic.TogglePawnVisibility(false); 
+                originalMaterials.Add(gameLogic.pawns[i].GetComponent<Renderer>().material);
             }
+        }
+
+        private void OnScanButtonClicked()
+        {
+            if (selectionCube != null)
+            {
+                Destroy(selectionCube);
+            }
+
+            imageTracker.OnCardScanned += HandleCardScanned;
+            
+            // Hide board
+            gameLogic.ToggleBoardVisibility(false);
+            // Hide pawns
+            gameLogic.TogglePawnVisibility(false);
 
             scanCardButton.gameObject.SetActive(false);
             turnIndicatorText.gameObject.SetActive(false);
-
-            if (imageTracker != null)
-            {
-                imageTracker.OnCardScanned += HandleCardScanned;
-            }
-            else
-            {
-                Debug.LogError("Image Tracker is not assigned in the inspector!");
-            }
-
-            Debug.Log("Started scanning for a card...");
         }
 
-        private void UpdateTurnIndicator(TeamEnum teamEnum)
+        private void UpdateTurnIndicator()
         {
-            turnIndicatorText.text = $"{teamEnum} team's turn!";
+            turnIndicatorText.text = $"{currentTeamTurn} team's turn!";
+            turnIndicatorText.gameObject.SetActive(true);
         }
 
-        private void HandleOptionSelected(string option)
+        private void NextTurn()
+        {
+            if (selectionCube != null)
+            {
+                Destroy(selectionCube);
+            }
+            
+            //Clearing stored variables for last player
+            currentTeamTurn = currentTeamTurn.GetNextTeam();
+            currentTeamPawns = gameLogic.pawns.Where(pawn => pawn.teamEnum == currentTeamTurn).ToList();
+            selectedPawn = currentTeamPawns.First();
+
+            //Showing whose turn it is & scan card button
+            UpdateTurnIndicator();
+            scanCardButton.gameObject.SetActive(true);
+            ShowBoardAndPawns();
+        }
+
+        private void HidePawnSelectionUI()
+        {
+            detectedCardText.gameObject.SetActive(false);
+            nextButton.gameObject.SetActive(false);
+            previousButton.gameObject.SetActive(false);
+            selectButton.GameObject().SetActive(false);
+        }
+
+        private void HandleOptionSelected(CardActionEnum option)
         {
             Debug.Log("Option selected: " + option);
             optionPanel.SetActive(false);
+            selectedAction = option;
         }
 
         private void SetupOptionPanelForCard(CardTypeEnum cardType)
@@ -169,26 +255,26 @@ namespace UI
             {
                 case CardTypeEnum.OneOrFourteen:
                     option1Button.GetComponentInChildren<TextMeshProUGUI>().text = "One";
-                    option1Button.onClick.AddListener(() => HandleOptionSelected("One"));
+                    option1Button.onClick.AddListener(() => HandleOptionSelected(CardActionEnum.One));
 
                     option2Button.GetComponentInChildren<TextMeshProUGUI>().text = "Fourteen";
-                    option2Button.onClick.AddListener(() => HandleOptionSelected("Fourteen"));
+                    option2Button.onClick.AddListener(() => HandleOptionSelected(CardActionEnum.Fourteen));
                     break;
 
                 case CardTypeEnum.HeartOrEight:
                     option1Button.GetComponentInChildren<TextMeshProUGUI>().text = "Heart";
-                    option1Button.onClick.AddListener(() => HandleOptionSelected("Heart"));
+                    option1Button.onClick.AddListener(() => HandleOptionSelected(CardActionEnum.Heart));
 
                     option2Button.GetComponentInChildren<TextMeshProUGUI>().text = "Eight";
-                    option2Button.onClick.AddListener(() => HandleOptionSelected("Eight"));
+                    option2Button.onClick.AddListener(() => HandleOptionSelected(CardActionEnum.Eight));
                     break;
 
                 case CardTypeEnum.HeartOrThirteen:
                     option1Button.GetComponentInChildren<TextMeshProUGUI>().text = "Heart";
-                    option1Button.onClick.AddListener(() => HandleOptionSelected("Heart"));
+                    option1Button.onClick.AddListener(() => HandleOptionSelected(CardActionEnum.Heart));
 
                     option2Button.GetComponentInChildren<TextMeshProUGUI>().text = "Thirteen";
-                    option2Button.onClick.AddListener(() => HandleOptionSelected("Thirteen"));
+                    option2Button.onClick.AddListener(() => HandleOptionSelected(CardActionEnum.Thirteen));
                     break;
             }
 
@@ -200,10 +286,13 @@ namespace UI
             Debug.Log("HandleCardScanned method entered.");
             Debug.Log("Card scanned: " + cardType);
 
-            if (cardType == CardTypeEnum.OneOrFourteen || cardType == CardTypeEnum.HeartOrEight ||
-                cardType == CardTypeEnum.HeartOrThirteen)
+            if (cardType is CardTypeEnum.OneOrFourteen or CardTypeEnum.HeartOrEight or CardTypeEnum.HeartOrThirteen)
             {
                 SetupOptionPanelForCard(cardType);
+            }
+            else
+            {
+                selectedAction = cardAction[cardType];
             }
 
             if (detectedCardText != null)
@@ -217,14 +306,21 @@ namespace UI
             } 
 
             // Delay by 3 seconds
-            Invoke("ToggleBoardVisibilityAndPawnVisibility", 3.0f);
+            Invoke(nameof(ShowBoardAndPawns), 2.0f);
+            
+            EnableSelectionButtons();
         }
 
-        private void ToggleBoardVisibilityAndPawnVisibility()
+        private void EnableSelectionButtons()
         {
-            // Show board
-            gameLogic.ToggleBoardVisibility();
-            // Show pawns
+            nextButton.gameObject.SetActive(true);
+            previousButton.gameObject.SetActive(true);
+            selectButton.GameObject().SetActive(true);
+        }
+
+        private void ShowBoardAndPawns()
+        {
+            gameLogic.ToggleBoardVisibility(true);
             gameLogic.TogglePawnVisibility(true);
         }
     
@@ -246,41 +342,59 @@ namespace UI
             return new List<T>((T[])Enum.GetValues(typeof(T)));
         }
 
-        void Update()
+        private void OnNextButtonClicked()
         {
-            if (Input.GetMouseButtonDown(0))
+            currentPawnIndex++;
+            if (currentPawnIndex >= currentTeamPawns.Count)
             {
-                RaycastHit hit;
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                currentPawnIndex = 0;
+            }
 
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity, tileLayer))
+            SelectPawnByIndex(currentTeamPawns[currentPawnIndex]);
+        }
+
+        private void OnPreviousButtonClicked()
+        {
+            currentPawnIndex--;
+            if (currentPawnIndex < 0)
+            {
+                currentPawnIndex = currentTeamPawns.Count - 1;
+            }
+
+            SelectPawnByIndex(currentTeamPawns[currentPawnIndex]);
+        }
+
+        private void SelectPawnByIndex(Pawn pawn)
+        {
+            if (selectionCube != null)
+            {
+                Destroy(selectionCube);
+            }
+            selectedPawn = pawn;
+
+            Debug.Log("Selected Pawn : " + selectedPawn.gameObject);
+
+            var spawnPosition = selectedPawn.transform.position + Vector3.up * 2;
+            selectionCube = Instantiate(cubePrefab, spawnPosition, Quaternion.identity);
+        }
+
+        private void OnSelectButtonClicked()
+        {
+            try
+            {
+                if (selectedPawn != null)
                 {
-                    //TODO: implement SelectPawn first
-                    // if (pawns[currentPawnIndex] != null)
-                    // {
-                    //
-                    //     GameObject selectedPawn = pawns[currentPawnIndex]; 
-                    //
-                    //
-                    //     int nrOfSteps = 3; 
-                    //
-                    //     MoveCurrentPawn(nrOfSteps);
-                    // }
+                    selectedPawn.transform.position = gameLogic.PlayCard(selectedPawn, selectedAction).vector3Position;
                 }
             }
-        }
-        public void SelectPawn(GameObject pawn)
-        {
-            //TODO: Get selected pawn and store it for calling the game logic
-            // for (int i = 0; i < pawns.Length; i++)
-            // {
-            //     if (pawns[i] == pawn)
-            //     {
-            //         currentPawnIndex = i;
-            //         Debug.Log("Current Pawn : " + pawn); // Debug
-            //         return;
-            //     }
-            // }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+            }
+            finally
+            {
+                NextTurn();
+            }
         }
     }
 }

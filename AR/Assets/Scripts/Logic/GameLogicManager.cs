@@ -1,5 +1,5 @@
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using Enums;
 using Models;
 using UI;
@@ -15,10 +15,10 @@ namespace Logic
         [SerializeField] private GameObject greenPawnPrefab;
         [SerializeField] private GameObject boardPrefab;
         [SerializeField] private Renderer boardRenderer;
-        private Renderer pawnRenderer;
-        private List<Pawn> pawns = new();
+        private Renderer pawnRenderer; //Is this needed? - Aldís 23.10.23
+        public List<Pawn> pawns = new();
         private Pawn selectedPawn;
-        private BoardLogic boardLogic;
+        [SerializeField]   private BoardLogic boardLogic;
 
         public void StartGame()
         {
@@ -34,7 +34,16 @@ namespace Logic
 
         public BoardPosition PlayCard(Pawn chosenPawn, CardActionEnum cardAction)
         {
-            return boardLogic.HandleCardPlayed(chosenPawn, cardAction);
+            try
+            {
+                return boardLogic.HandleCardPlayed(chosenPawn, cardAction);
+            }
+            catch (InvalidOperationException e) //This exception means that the tile already has a pawn on it
+            {
+                Console.WriteLine(e);
+                //TODO: Call a method to check the pawns' colors, move a pawn back to home base if appropriate and return the position - Aldís 23.10.23
+                return null;
+            }
         }
 
         void SpawnBoardPrefab()
@@ -52,66 +61,85 @@ namespace Logic
             boardRenderer = boardInstance.GetComponent<Renderer>();
         }
     
-        public void ToggleBoardVisibility()
+        public void ToggleBoardVisibility(bool isVisible)
         {
             if (boardRenderer != null)
             {
-                boardRenderer.enabled = !boardRenderer.enabled;
+                boardRenderer.enabled = isVisible;
             }
         }
 
         public void TogglePawnVisibility(bool isVisible)
         {
-            foreach (var pawn in pawns)
+            for (int i = 0; i < pawns.Count; i++)
             {
-                pawn.GetComponentInChildren<Renderer>().enabled = isVisible;
+                if (pawns[i] != null)
+                {
+                    Renderer[] renderers = pawns[i].GetComponentsInChildren<Renderer>();
+                    foreach (Renderer renderer in renderers)
+                    {
+                        renderer.enabled = isVisible;
+                    }
+                }
             }
         }
+        
     
         //TODO: Create a bool method that returns whether a pawn is able to move or not 17.10.23
         
         void SpawnPawns()
         {
-            GameObject[] redTiles = GameObject.FindGameObjectsWithTag("BaseRedTile");
-            GameObject[] blueTiles = GameObject.FindGameObjectsWithTag("BaseBlueTile");
-            GameObject[] yellowTiles = GameObject.FindGameObjectsWithTag("BaseYellowTile");
-            GameObject[] greenTiles = GameObject.FindGameObjectsWithTag("BaseGreenTile");
-
-            SpawnPawnsForColor(redTiles, TeamEnum.RedOrHeart);
-            SpawnPawnsForColor(blueTiles, TeamEnum.BlueOrWater);
-            SpawnPawnsForColor(yellowTiles, TeamEnum.YellowOrStar);
-            SpawnPawnsForColor(greenTiles, TeamEnum.GreenOrEmerald);
+            SpawnPawnsForColor(TeamEnum.BlueOrWater);
+            SpawnPawnsForColor(TeamEnum.RedOrHeart);
+            SpawnPawnsForColor(TeamEnum.YellowOrStar);
+            SpawnPawnsForColor(TeamEnum.GreenOrEmerald);
         }
 
-        void SpawnPawnsForColor(GameObject[] baseTiles, TeamEnum color)
+        void SpawnPawnsForColor(TeamEnum color)
         {
+            Debug.Log("spawn pawns");
+
+            var pawnPrefab = GetPawnPrefab(color);
+
+            var availablePositions = boardLogic.GetAvailableTilePositions(color.ToQuadrant(), TileNumberEnum.HomeBase);
+
+            if (availablePositions.Count < 4)
+            {
+                Debug.LogError("Not enough available tiles for spawning pawns.");
+                return;
+            }
+
             for (var i = 0; i < 4; i++)
             {
-                var pawnPrefab = GetPawnPrefab(color);
+                var position = new BoardPosition(color.ToQuadrant(), TileNumberEnum.HomeBase, availablePositions[i]);
 
-                var pawn = Instantiate(pawnPrefab, baseTiles[i].transform.position, Quaternion.identity).GetComponent<Pawn>();
+                var pawn = Instantiate(pawnPrefab, position.vector3Position, Quaternion.identity).GetComponent<Pawn>();
+                Debug.Log($"Pawn spawned at position: {pawn.transform.position}");
+
                 pawn.gameLogic = this;
                 pawn.teamEnum = color;
-                
+                pawn.boardPosition = position;
+
                 pawns.Add(pawn);
             }
         }
         
-        GameObject GetPawnPrefab(TeamEnum color)
+        
+        private GameObject GetPawnPrefab(TeamEnum color)
         {
-            switch (color)
+            return color switch
             {
-                case TeamEnum.RedOrHeart:
-                    return redPawnPrefab;
-                case TeamEnum.BlueOrWater:
-                    return bluePawnPrefab;
-                case TeamEnum.YellowOrStar:
-                    return yellowPawnPrefab;
-                case TeamEnum.GreenOrEmerald:
-                    return greenPawnPrefab;
-                default:
-                    return null;
-            }
+                TeamEnum.RedOrHeart => redPawnPrefab,
+                TeamEnum.BlueOrWater => bluePawnPrefab,
+                TeamEnum.YellowOrStar => yellowPawnPrefab,
+                TeamEnum.GreenOrEmerald => greenPawnPrefab,
+                _ => null
+            };
+        }
+
+        private List<T> EnumToList<T>()
+        {
+            return new List<T>((T[])Enum.GetValues(typeof(T)));
         }
     }
 }

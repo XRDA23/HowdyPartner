@@ -8,6 +8,6 @@ namespace Models
     {
         public TeamEnum teamEnum;
         public GameLogic gameLogic;
-        public BoardPosition position;
+        public BoardPosition boardPosition;
     }
 }

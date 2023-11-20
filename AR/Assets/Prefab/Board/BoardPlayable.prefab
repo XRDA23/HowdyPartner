@@ -121,7 +121,7 @@ GameObject:
   - component: {fileID: 9104034972820096322}
   m_Layer: 0
   m_Name: Tiles
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -157,6 +157,7 @@ GameObject:
   - component: {fileID: 4350602405817651998}
   - component: {fileID: 7234419482527384909}
   - component: {fileID: 3126897667275079373}
+  - component: {fileID: 7673049585096191794}
   m_Layer: 0
   m_Name: BoardPlayable
   m_TagString: Untagged
@@ -251,6 +252,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7673049585096191794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7015306177305918648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 522be2716bc208348a99651a8d4969ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7302412011528948588
 GameObject:
   m_ObjectHideFlags: 0
@@ -377,7 +390,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: FinalZoneGreenTile
+      value: GreenEndBase3
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -481,7 +494,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: GreenPathTile
+      value: GreenThree
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -580,7 +593,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: GreenPathTile
+      value: GreenOne
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -679,7 +692,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: FinalZoneGreenTile
+      value: GreenEndBase2
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -783,7 +796,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: FinalZoneYellowTile
+      value: YellowEndBase1
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -887,7 +900,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: YellowPathTile
+      value: YellowSeven
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -986,7 +999,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: FinalZoneRedTile
+      value: RedArrow
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -1090,7 +1103,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: GreenPathTile
+      value: GreenFour
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -1189,7 +1202,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: RedPathTile
+      value: RedNine
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -1288,7 +1301,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: YellowPathTile
+      value: YellowNine
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -1387,7 +1400,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: BaseRedTile
+      value: RedHomeBase
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -1491,7 +1504,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: YellowPathTile
+      value: YellowFour
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -1590,7 +1603,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: BaseBlueTile
+      value: BlueHomeBase
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -1694,7 +1707,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: YellowPathTile
+      value: YellowTwelve
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -1793,7 +1806,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: BaseGreenTile
+      value: GreenHomeBase
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -1897,7 +1910,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: YellowPathTile
+      value: YellowEight
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -1996,7 +2009,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: HeartBlueTile
+      value: BlueHeart
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -2100,7 +2113,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: GreenPathTile
+      value: GreenFive
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -2199,7 +2212,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: YellowPathTile
+      value: YellowSix
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -2298,7 +2311,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: HeartGreenTile
+      value: GreenHeart
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -2402,7 +2415,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: BaseYellowTile
+      value: YellowHomeBase
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -2506,7 +2519,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: YellowPathTile
+      value: YellowFive
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -2605,7 +2618,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: GreenPathTile
+      value: GreenTwelve
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -2704,7 +2717,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: YellowPathTile
+      value: YellowThirteen
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -2803,7 +2816,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: FinalZoneBlueTile
+      value: BlueEndBase2
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -2907,7 +2920,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: GreenPathTile
+      value: GreenFourteen
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -3006,7 +3019,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: GreenPathTile
+      value: GreenTen
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -3105,7 +3118,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: BluePathTile
+      value: BlueTwelve
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -3209,7 +3222,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: FinalZoneTile
+      value: BlueEndBase4
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -3313,7 +3326,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: BluePathTile
+      value: BlueEight
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -3417,7 +3430,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: GreenPathTile
+      value: GreenSix
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -3516,7 +3529,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: FinalZoneBlueTile
+      value: BlueEndBase3
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -3620,7 +3633,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: RedPathTile
+      value: RedTwo
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -3719,7 +3732,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: GreenPathTile
+      value: GreenTwo
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -3818,7 +3831,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: FinalZoneRedTile
+      value: RedEndBase4
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -3922,7 +3935,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: BaseGreenTile
+      value: GreenHomeBase
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -4026,7 +4039,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: BaseRedTile
+      value: RedHomeBase
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -4130,7 +4143,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: BaseGreenTile
+      value: GreenHomeBase
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -4234,7 +4247,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: GreenPathTile
+      value: GreenEight
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -4333,7 +4346,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: BaseRedTile
+      value: RedHomeBase
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -4437,7 +4450,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: FinalZoneBlueTile
+      value: BlueEndBase1
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -4541,7 +4554,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: BaseBlueTile
+      value: BlueHomeBase
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -4645,7 +4658,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: BluePathTile
+      value: BlueSix
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -4749,7 +4762,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: RedPathTile
+      value: RedEleven
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -4848,7 +4861,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: YellowPathTile
+      value: YellowTen
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -4947,7 +4960,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: RedPathTile
+      value: RedTen
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -5046,7 +5059,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: BluePathTile
+      value: BlueTwo
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -5150,7 +5163,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: YellowPathTile
+      value: YellowOne
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -5249,7 +5262,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: BaseYellowTile
+      value: YellowHomeBase
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -5353,7 +5366,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: BaseBlueTile
+      value: BlueHomeBase
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -5457,7 +5470,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: BluePathTile
+      value: BlueThirteen
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -5561,7 +5574,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: YellowPathTile
+      value: YellowThree
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -5660,7 +5673,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: BluePathTile
+      value: BlueFive
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -5764,7 +5777,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: GreenPathTile
+      value: GreenEleven
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -5863,7 +5876,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: BluePathTile
+      value: BlueFourteen
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -5967,7 +5980,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: FinalZoneGreenTile
+      value: GreenArrow
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -6071,7 +6084,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: YellowPathTile
+      value: YellowTwo
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -6170,7 +6183,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: HeartYellowTile
+      value: YellowHeart
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -6274,7 +6287,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: BaseYellowTile
+      value: YellowHomeBase
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -6378,7 +6391,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: FinalZoneRedTile
+      value: RedEndBase1
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -6482,7 +6495,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: BluePathTile
+      value: BlueTen
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -6586,7 +6599,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: FinalZoneYellowTile
+      value: YellowEndBase3
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -6690,7 +6703,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: BaseBlueTile
+      value: BlueHomeBase
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -6794,7 +6807,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: BluePathTile
+      value: BlueNine
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -6898,7 +6911,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: FinalZoneYellowTile
+      value: YellowArrow
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -7002,7 +7015,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: RedPathTile
+      value: RedOne
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -7101,7 +7114,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: FinalZoneRedTile
+      value: RedEndBase2
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -7205,7 +7218,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: FinalZoneYellowTile
+      value: YellowEndBase2
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -7309,7 +7322,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: GreenPathTile
+      value: GreenThirteen
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -7408,7 +7421,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: GreenPathTile
+      value: GreenSeven
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -7507,7 +7520,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: GreenPathTile
+      value: GreenNine
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -7606,7 +7619,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: BluePathTile
+      value: BlueThree
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -7710,7 +7723,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: RedPathTile
+      value: RedThirteen
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -7809,7 +7822,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: RedPathTile
+      value: RedSix
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -7908,7 +7921,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: BaseGreenTile
+      value: GreenHomeBase
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -8012,7 +8025,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: RedPathTile
+      value: RedSeven
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -8111,7 +8124,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: BluePathTile
+      value: BlueFour
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -8215,7 +8228,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: FinalZoneRedTile
+      value: RedEndBase3
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -8319,7 +8332,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: BaseRedTile
+      value: RedHomeBase
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -8423,7 +8436,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: YellowPathTile
+      value: YellowEleven
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -8522,7 +8535,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: YellowPathTile
+      value: YellowFourteen
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -8621,7 +8634,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: RedPathTile
+      value: RedFive
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -8720,7 +8733,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: BluePathTile
+      value: BlueOne
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -8824,7 +8837,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: BluePathTile
+      value: BlueSeven
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -8928,7 +8941,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: BaseYellowTile
+      value: YellowHomeBase
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -9032,7 +9045,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: FinalZoneBlueTile
+      value: BlueArrow
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -9136,7 +9149,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: RedPathTile
+      value: RedFourteen
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -9235,7 +9248,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: RedPathTile
+      value: RedFour
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -9334,7 +9347,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: FinalZoneGreenTile
+      value: GreenEndBase1
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -9438,7 +9451,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: RedPathTile
+      value: RedEight
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -9537,7 +9550,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: BluePathTile
+      value: BlueEleven
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -9641,7 +9654,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: RedPathTile
+      value: RedThree
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -9740,7 +9753,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: FinalZoneYellowTile
+      value: YellowEndBase4
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -9844,7 +9857,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: HeartRedTile
+      value: RedHeart
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -9948,7 +9961,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: FinalZoneGreenTile
+      value: GreenEndBase4
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
@@ -10052,7 +10065,7 @@ PrefabInstance:
     - target: {fileID: 580878920185530009, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
       propertyPath: m_TagString
-      value: RedPathTile
+      value: RedTwelve
       objectReference: {fileID: 0}
     - target: {fileID: 1504822931834801724, guid: 603b3ed03efb581418a7ef238d1ceab8,
         type: 3}
