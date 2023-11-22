@@ -1,8 +1,8 @@
 # HowdyPartner
 An AR experience of the boardgame [Partners](https://www.partnersboardgame.com/) with visual accessibility augmenteded pawns for the color blind. The project future is adding more board prefabs to accommodate different numbers of players without having to purchase a new physical board.
 An SVG of a class diagram used in development can be found in the repository along with the source code.
-Created as a course assignment in AR for XR development in autumn of 2023 for software engineering at [VIA university college](https://via.dk), campus Horsens, DK.
-
+Created as a course assignment in AR for XR development in autumn of 2023 for software engineering at [VIA university college](https://via.dk), campus Horsens, DK.  
+Here is a YouTube [video](https://youtu.be/hc8_WyKQBnE) giving a demonstration of the project.
 
 ## Development Team
 The project group consists of four people:
